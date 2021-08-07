@@ -7,34 +7,30 @@ package TDAs;
 
 /**
  *
- * @author aaron
- * @param <E>
+ * @author Administrador
  */
-public class NodeList<E> {
+public class Node<E> {
     private E content;
-    private NodeList<E> next;
-
-    public NodeList(E content) {
-        this.content = content;
+    private Node<E> next;
+    
+    public Node(E data){
+        this.content = data;
         this.next = null;
     }
-    
-    
 
     public E getContent() {
         return content;
     }
 
-    public void setContent(E content) {
-        this.content = content;
+    public void setContent(E data) {
+        this.content = data;
     }
 
-    public NodeList<E> getNext() {
+    public Node<E> getNext() {
         return next;
     }
 
-    public void setNext(NodeList<E> next) {
+    public void setNext(Node<E> next) {
         this.next = next;
-    }
-    
+    } 
 }

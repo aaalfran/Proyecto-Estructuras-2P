@@ -8,16 +8,23 @@ package TDAs;
 /**
  *
  * @author moise
+ * @param <T>
  */
-public class TreeNode<E> {
-   private E content; 
+public class TreeNode<T> {
+   private T content; 
    private LinkedList<Tree> children;
 
-    public E getContent() {
+    public TreeNode(T content) {
+        this.content = content;
+        this.children = new LinkedList<>();
+    }
+    
+   
+    public T getContent() {
         return content;
     }
 
-    public void setContent(E content) {
+    public void setContent(T content) {
         this.content = content;
     }
 
@@ -25,9 +32,20 @@ public class TreeNode<E> {
         return children;
     }
 
-    public void setChildren(LinkedList<Tree> children) {
-        this.children = children;
+    public void add(T content){
+        Tree t= new Tree(content);
+        this.children.addLast(t);
+    
+    }
+     public void add(Tree t){
+        this.children.addLast(t);
+    
+    }
+    public void setFather(LinkedList<Tree> children) {
+        for (int i = 0; i < children.size(); i++) {
+             Tree t = children.get(i);
+             t.setRoot(this);
+        }
     }
     
-   
 }
