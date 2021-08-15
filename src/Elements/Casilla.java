@@ -21,7 +21,7 @@ public class Casilla extends StackPane {
     
     static int turnos = 1;
     private ImageView estado;
-    private String link;
+    private String link ="";
 
     public Casilla() {
         estado = new ImageView();
@@ -32,19 +32,19 @@ public class Casilla extends StackPane {
 
         setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.PRIMARY) {
+                
                 if (!((turnos % 2) == 0)) {
-                    link = "/resources/x.png";
+                    link = "X";
                     estado.setImage(new Image("/resources/x.png"));
 
                 }
                 if ((turnos % 2) == 0) {
-                    link = "/resources/o.png";
+                    link = "O";
                     estado.setImage(new Image("/resources/o.png"));
 
                 }
 
                 turnos += 1;
-                VistaJuegoController.llenarMatriz();
                 VistaJuegoController.utilidadTablero();
             }
              
@@ -75,5 +75,11 @@ public class Casilla extends StackPane {
     public void setLink(String link) {
         this.link = link;
     }
-;
+
+    @Override
+    public String toString() {
+        return link ;
+    }
+
+    
 }
