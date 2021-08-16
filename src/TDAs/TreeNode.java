@@ -8,44 +8,43 @@ package TDAs;
 /**
  *
  * @author moise
- * @param <T>
+ * @param <E>
  */
-public class TreeNode<T> {
-   private T content; 
-   private LinkedList<Tree> children;
+public class TreeNode<E> {
+   private E content; 
+   private LinkedList<Tree<E>> children;
 
-    public TreeNode(T content) {
+    public TreeNode(E content) {
         this.content = content;
         this.children = new LinkedList<>();
     }
     
    
-    public T getContent() {
+    public E getContent() {
         return content;
     }
 
-    public void setContent(T content) {
+    public void setContent(E content) {
         this.content = content;
     }
 
-    public LinkedList<Tree> getChildren() {
+    public LinkedList<Tree<E>> getChildren() {
         return children;
     }
 
-    public void add(T content){
-        Tree t= new Tree(content);
+    public void addChild(E content){
+        Tree<E> t= new Tree(content);
         this.children.addLast(t);
     
     }
-     public void add(Tree t){
+
+    public void setChildren(LinkedList<Tree<E>> children) {
+        this.children = children;
+    }
+     public void addChild(Tree<E> t){
         this.children.addLast(t);
     
     }
-    public void setFather(LinkedList<Tree> children) {
-        for (int i = 0; i < children.size(); i++) {
-             Tree t = children.get(i);
-             t.setRoot(this);
-        }
-    }
+   
     
 }

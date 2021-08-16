@@ -36,6 +36,7 @@ public class Casilla extends StackPane {
                 if (!((turnos % 2) == 0)) {
                     link = "X";
                     estado.setImage(new Image("/resources/x.png"));
+                
 
                 }
                 if ((turnos % 2) == 0) {

@@ -7,6 +7,7 @@ package tictactoe;
 
 import Elements.Casilla;
 import TDAs.LinkedList;
+import TDAs.Tree;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -20,6 +21,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import static tictactoe.VistaJuegoController.arregloMatrix;
 
 /**
  * FXML Controller class
@@ -34,6 +36,11 @@ public class VistaJuegoController implements Initializable {
 //Creando objetos en pantalla
     static String[][] arregloMatrix = new String[3][3];
     static LinkedList<Casilla> listaCasillas = new LinkedList();
+   private LinkedList<Tree<String[][]>> matricesChildren;
+    Tree<String[][]> tree = new Tree<>(arregloMatrix);
+      
+    
+     boolean moveFirst = true;
 
 //Creando objetos en pantalla
     private void crearMatriz() {
@@ -132,6 +139,47 @@ public class VistaJuegoController implements Initializable {
         
         System.out.println(cond2DiagPrincipal);
 
+    }
+    
+   
+    
+
+    public  void possibleStates(String opcion) { 
+        String[][] matrixTmp = arregloMatrix.clone();
+
+        //GENERA LOS POSIBLES MOVIMIENTOS EN UN TABLERO VACIO
+        if (moveFirst) {
+            if (opcion.equals("x")) {
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        matrixTmp[i][j] = opcion;
+                        matricesChildren.addLast(tree);
+                        matrixTmp[i][j] = null;//revisar
+
+                    }
+
+                }
+                tree.getRoot().setChildren(matricesChildren);
+
+            } else if (opcion.equals("o")) {
+                if (opcion.equals("x")) {
+                    for (int i = 0; i < 3; i++) {
+                        for (int j = 0; j < 3; j++) {
+                            matrixTmp[i][j] = opcion;
+                            matricesChildren.addLast(tree);
+                            matrixTmp[i][j] = null;
+
+                        }
+
+                    }
+                    tree.getRoot().setChildren(matricesChildren);
+
+                }
+
+            }
+        moveFirst=false;
+        } 
+       
     }
 
     @Override
