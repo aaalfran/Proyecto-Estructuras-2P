@@ -106,7 +106,31 @@ public class VistaJuegoController implements Initializable {
             }
             condFila = 1;
         }
-        System.out.println(cond2Fila);
+
+        //Chequeo por diagonal principal
+        int condDiagPrincipal = 1;
+        int cond2DiagPrincipal = 0;
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j <= 3; j++) {
+                if (j < 3) {
+                    if (i == j) {
+                        if (!arregloMatrix[i][j].equals("O")) {
+                            condDiagPrincipal *= 1;
+                        } else {
+                            condDiagPrincipal *= 0;
+                        }
+                    }
+                } else {
+                    if (condDiagPrincipal == 1) {
+                        cond2DiagPrincipal++;
+                    }
+                }
+
+            }
+        }
+        
+        System.out.println(cond2DiagPrincipal);
 
     }
 
