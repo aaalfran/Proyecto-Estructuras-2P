@@ -27,17 +27,13 @@ import javafx.scene.layout.VBox;
  * @author aaron
  */
 public class VistaJuegoController implements Initializable {
-    
-    
+
     @FXML
     private Pane root;
-    
+
 //Creando objetos en pantalla
-    
     static String[][] arregloMatrix = new String[3][3];
     static LinkedList<Casilla> listaCasillas = new LinkedList();
-
-
 
 //Creando objetos en pantalla
     private void crearMatriz() {
@@ -52,46 +48,70 @@ public class VistaJuegoController implements Initializable {
                 listaCasillas.addLast(cas);
             }
         }
-        
+
         System.out.println(listaCasillas);
 
     }
+
     public static void utilidadTablero() {
-    
-        
-    int contador =0;
-    for (int i = 0; i < 3; i++) {
+
+        int contador = 0;
+        for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                arregloMatrix[i][j]= listaCasillas.get(contador).getLink();
+                arregloMatrix[i][j] = listaCasillas.get(contador).getLink();
                 contador++;
-                
+
             }
-    }
-    
-    //Chequeo por filas
-    int cond=1;
-    int cond2=0;
+        }
+
+        //Chequeo por filas
+        int cond = 1;
+        int cond2 = 0;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j <= 3; j++) {
-                if(j<3){
-                    if(!arregloMatrix[i][j].equals("O")){
-                        cond*=1;
-                    }else{
-                    cond*=0;
+                if (j < 3) {
+                    if (!arregloMatrix[i][j].equals("O")) {
+                        cond *= 1;
+                    } else {
+                        cond *= 0;
                     }
-                }else{
-                    if(cond==1){
-                    cond2++;
+                } else {
+                    if (cond == 1) {
+                        cond2++;
+                    }
                 }
-                }
-                
+
             }
-            cond=1;
+            cond = 1;
+        }
+
+        //Chequeo por columnas
+        int condFila = 1;
+        int cond2Fila = 0;
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j <= 3; j++) {
+                if (j < 3) {
+                    if (!arregloMatrix[j][i].equals("O")) {
+                        condFila *= 1;
+                    } else {
+                        condFila *= 0;
+                    }
+                } else {
+                    if (condFila == 1) {
+                        cond2Fila++;
+                    }
+                }
+
+            }
+            condFila = 1;
+        }
+        System.out.println(cond2Fila);
+
     }
-        System.out.println(cond2);
- }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         crearMatriz();
-    }    
+    }
 }
