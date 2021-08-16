@@ -56,7 +56,7 @@ public class VistaJuegoController implements Initializable {
         System.out.println(listaCasillas);
 
     }
-    public static void utilidadTablero(String valor) {
+    public static void utilidadTablero() {
     
         
     int contador =0;
