@@ -67,6 +67,8 @@ public class VistaJuegoController implements Initializable {
         chequeoColumnas();
 
         chequoDigonalPrincipal();
+        
+        chequeoDiagonalSecundaria();
     }
 
     public static void chequeoFilas() {
@@ -125,6 +127,17 @@ public class VistaJuegoController implements Initializable {
         }
 
     }
+    
+    public static void chequeoDiagonalSecundaria(){
+        //Chequeo por diagonal secundaria      
+        if (!arregloMatrix[0][2].equals("O") && !arregloMatrix[1][1].equals("O") && !arregloMatrix[2][0].equals("O")) {
+            System.out.println(1);
+        } else {
+            System.out.println(0);
+        }
+    }
+    
+    
 
     public void possibleStates(String opcion) {
         String[][] matrixTmp = arregloMatrix.clone();
