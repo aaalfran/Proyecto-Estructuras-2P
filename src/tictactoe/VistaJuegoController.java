@@ -10,17 +10,9 @@ import TDAs.LinkedList;
 import TDAs.Tree;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
-import javafx.scene.Cursor;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import static tictactoe.VistaJuegoController.arregloMatrix;
 
 /**
@@ -36,11 +28,10 @@ public class VistaJuegoController implements Initializable {
 //Creando objetos en pantalla
     static String[][] arregloMatrix = new String[3][3];
     static LinkedList<Casilla> listaCasillas = new LinkedList();
-   private LinkedList<Tree<String[][]>> matricesChildren;
+    private LinkedList<Tree<String[][]>> matricesChildren;
     Tree<String[][]> tree = new Tree<>(arregloMatrix);
-      
-    
-     boolean moveFirst = true;
+
+    boolean moveFirst = true;
 
 //Creando objetos en pantalla
     private void crearMatriz() {
@@ -71,6 +62,14 @@ public class VistaJuegoController implements Initializable {
             }
         }
 
+        chequeoFilas();
+
+        chequeoColumnas();
+
+        chequoDigonalPrincipal();
+    }
+
+    public static void chequeoFilas() {
         //Chequeo por filas
         int cond = 1;
         int cond2 = 0;
@@ -91,7 +90,9 @@ public class VistaJuegoController implements Initializable {
             }
             cond = 1;
         }
+    }
 
+    public static void chequeoColumnas() {
         //Chequeo por columnas
         int condFila = 1;
         int cond2Fila = 0;
@@ -113,38 +114,19 @@ public class VistaJuegoController implements Initializable {
             }
             condFila = 1;
         }
+    }
 
-        //Chequeo por diagonal principal
-        int condDiagPrincipal = 1;
-        int cond2DiagPrincipal = 0;
-
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j <= 3; j++) {
-                if (j < 3) {
-                    if (i == j) {
-                        if (!arregloMatrix[i][j].equals("O")) {
-                            condDiagPrincipal *= 1;
-                        } else {
-                            condDiagPrincipal *= 0;
-                        }
-                    }
-                } else {
-                    if (condDiagPrincipal == 1) {
-                        cond2DiagPrincipal++;
-                    }
-                }
-
-            }
+    public static void chequoDigonalPrincipal() {
+        //Chequeo por diagonal principal      
+        if (!arregloMatrix[0][0].equals("O") && !arregloMatrix[1][1].equals("O") && !arregloMatrix[2][2].equals("O")) {
+            System.out.println(1);
+        } else {
+            System.out.println(0);
         }
-        
-        System.out.println(cond2DiagPrincipal);
 
     }
-    
-   
-    
 
-    public  void possibleStates(String opcion) { 
+    public void possibleStates(String opcion) {
         String[][] matrixTmp = arregloMatrix.clone();
 
         //GENERA LOS POSIBLES MOVIMIENTOS EN UN TABLERO VACIO
@@ -177,9 +159,9 @@ public class VistaJuegoController implements Initializable {
                 }
 
             }
-        moveFirst=false;
-        } 
-       
+            moveFirst = false;
+        }
+
     }
 
     @Override
