@@ -51,7 +51,7 @@ public class VistaJuegoController implements Initializable {
 
     }
 
-    public static void utilidadTablero() {
+    public static int utilidadTablero() {
 
         int contador = 0;
         for (int i = 0; i < 3; i++) {
@@ -62,16 +62,18 @@ public class VistaJuegoController implements Initializable {
             }
         }
 
-        chequeoFilas();
+        int fila = chequeoFilas();
 
-        chequeoColumnas();
+        int columna = chequeoColumnas();
 
-        chequoDigonalPrincipal();
+        int diagonalPrincipal = chequoDigonalPrincipal();
+
+        int diagonalSeecundaria = chequeoDiagonalSecundaria();
         
-        chequeoDiagonalSecundaria();
+        return fila+columna+diagonalPrincipal+diagonalSeecundaria;
     }
 
-    public static void chequeoFilas() {
+    public static int chequeoFilas() {
         //Chequeo por filas
         int cond = 1;
         int cond2 = 0;
@@ -92,9 +94,10 @@ public class VistaJuegoController implements Initializable {
             }
             cond = 1;
         }
+        return cond2;
     }
 
-    public static void chequeoColumnas() {
+    public static int chequeoColumnas() {
         //Chequeo por columnas
         int condFila = 1;
         int cond2Fila = 0;
@@ -116,28 +119,27 @@ public class VistaJuegoController implements Initializable {
             }
             condFila = 1;
         }
+        return cond2Fila;
     }
 
-    public static void chequoDigonalPrincipal() {
+    public static int chequoDigonalPrincipal() {
         //Chequeo por diagonal principal      
         if (!arregloMatrix[0][0].equals("O") && !arregloMatrix[1][1].equals("O") && !arregloMatrix[2][2].equals("O")) {
-            System.out.println(1);
+            return 1;
         } else {
-            System.out.println(0);
+            return 0;
         }
 
     }
-    
-    public static void chequeoDiagonalSecundaria(){
+
+    public static int chequeoDiagonalSecundaria() {
         //Chequeo por diagonal secundaria      
         if (!arregloMatrix[0][2].equals("O") && !arregloMatrix[1][1].equals("O") && !arregloMatrix[2][0].equals("O")) {
-            System.out.println(1);
+            return 1;
         } else {
-            System.out.println(0);
+            return 0;
         }
     }
-    
-    
 
     public void possibleStates(String opcion) {
         String[][] matrixTmp = arregloMatrix.clone();
