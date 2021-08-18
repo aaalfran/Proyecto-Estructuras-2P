@@ -42,11 +42,13 @@ public class Casilla extends StackPane {
                 if ((turnos % 2) == 0) {
                     link = "O";
                     estado.setImage(new Image("/resources/o.png"));
+                    VistaJuegoController.possibleStates("O");
 
                 }
 
                 turnos += 1;
-                VistaJuegoController.utilidadTablero();
+                VistaJuegoController.utilidadTablero(link);
+              
             }
              
 
