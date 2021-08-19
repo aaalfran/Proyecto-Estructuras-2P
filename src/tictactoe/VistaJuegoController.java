@@ -99,27 +99,27 @@ public class VistaJuegoController implements Initializable {
 
     public static int chequeoColumnas(String Opcion) {
         //Chequeo por columnas
-        int condFila = 1;
-        int cond2Fila = 0;
+        int condColumna = 1;
+        int cond2Columna = 0;
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j <= 3; j++) {
                 if (j < 3) {
                     if (!arregloMatrix[j][i].equals(Opcion)) {
-                        condFila *= 1;
+                        condColumna *= 1;
                     } else {
-                        condFila *= 0;
+                        condColumna *= 0;
                     }
                 } else {
-                    if (condFila == 1) {
-                        cond2Fila++;
+                    if (condColumna == 1) {
+                        cond2Columna++;
                     }
                 }
 
             }
-            condFila = 1;
+            condColumna = 1;
         }
-        return cond2Fila;
+        return cond2Columna;
     }
 
     public static int chequoDigonalPrincipal(String Opcion) {
@@ -190,6 +190,80 @@ public class VistaJuegoController implements Initializable {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+
+    }
+
+    public static boolean isTie() {
+        boolean estado = true;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (arregloMatrix[i][j].equals("")) {
+                    return false;
+                }
+            }
+
+        }
+
+        return estado;
+    }
+
+    
+    public static boolean isWinner() {
+        boolean filas = false;
+        boolean columnas = false;
+        boolean diagPrincipal = false;
+        boolean diagSecundaria = false;
+
+        int condFila = 1;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j <= 3; j++) {
+                if (j < 3) {
+                    if (arregloMatrix[i][j].equals("X")) {
+                        condFila *= 1;
+                    } else {
+                        condFila *= 0;
+                    }
+                } else {
+                    if (condFila == 1) {
+                        filas = true;
+                    }
+                }
+
+            }
+            condFila = 1;
+        }
+
+        //Chequeo por columnas
+        int condColumna = 1;
+        for (int k = 0; k < 3; k++) {
+            for (int l = 0; l <= 3; l++) {
+                if (l < 3) {
+                    if (arregloMatrix[l][k].equals("X")) {
+                        condColumna *= 1;
+                    } else {
+                        condColumna *= 0;
+                    }
+                } else {
+                    if (condColumna == 1) {
+                        columnas = true;
+                    }
+                }
+
+                condColumna = 1;
+            }
+        }
+
+        //Chequeo diagonal Principal
+        if (arregloMatrix[0][0].equals("X") && arregloMatrix[1][1].equals("X") && arregloMatrix[2][2].equals("X")) {
+            diagPrincipal = true;
+        }
+
+        //Chequeo por diagonal secundaria      
+        if (arregloMatrix[0][2].equals("X") && arregloMatrix[1][1].equals("X") && arregloMatrix[2][0].equals("X")) {
+            diagSecundaria = true;
+        }
+
+        return diagPrincipal || diagSecundaria || filas;
 
     }
 

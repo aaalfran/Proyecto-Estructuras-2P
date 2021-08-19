@@ -5,12 +5,12 @@
  */
 package Elements;
 
-import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.StackPane;
+import javax.swing.JOptionPane;
 import tictactoe.VistaJuegoController;
 
 /**
@@ -18,10 +18,10 @@ import tictactoe.VistaJuegoController;
  * @author aaron
  */
 public class Casilla extends StackPane {
-    
+
     static int turnos = 1;
     private ImageView estado;
-    private String link ="";
+    private String link = "";
 
     public Casilla() {
         estado = new ImageView();
@@ -32,11 +32,10 @@ public class Casilla extends StackPane {
 
         setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.PRIMARY) {
-                
+
                 if (!((turnos % 2) == 0)) {
                     link = "X";
                     estado.setImage(new Image("/resources/x.png"));
-                
 
                 }
                 if ((turnos % 2) == 0) {
@@ -48,9 +47,17 @@ public class Casilla extends StackPane {
 
                 turnos += 1;
                 VistaJuegoController.utilidadTablero(link);
-              
+                
+                System.out.println(VistaJuegoController.isWinner());
+                if (VistaJuegoController.isWinner()) {
+                    JOptionPane.showMessageDialog(null, "¡Ganó el jugador X!");
+                } else {
+                    if (VistaJuegoController.isTie()) {
+                        JOptionPane.showMessageDialog(null, "¡Empate!");
+                    }
+                }
+
             }
-             
 
         });
     }
@@ -81,8 +88,7 @@ public class Casilla extends StackPane {
 
     @Override
     public String toString() {
-        return link ;
+        return link;
     }
 
-    
 }
