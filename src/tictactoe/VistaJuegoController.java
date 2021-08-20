@@ -234,23 +234,23 @@ public class VistaJuegoController implements Initializable {
         }
 
         //Chequeo por columnas
-        int condColumna = 1;
-        for (int k = 0; k < 3; k++) {
-            for (int l = 0; l <= 3; l++) {
-                if (l < 3) {
-                    if (arregloMatrix[l][k].equals("X")) {
-                        condColumna *= 1;
+        int eColumna = 1;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j <= 3; j++) {
+                if (j < 3) {
+                    if (arregloMatrix[j][i].equals("X")) {
+                         eColumna *= 1;
                     } else {
-                        condColumna *= 0;
-                    }
+                        eColumna *= 0;
+                     }
                 } else {
-                    if (condColumna == 1) {
+                    if (eColumna == 1) {
                         columnas = true;
                     }
                 }
 
-                condColumna = 1;
             }
+            eColumna = 1;
         }
 
         //Chequeo diagonal Principal
@@ -263,7 +263,7 @@ public class VistaJuegoController implements Initializable {
             diagSecundaria = true;
         }
 
-        return diagPrincipal || diagSecundaria || filas;
+        return diagPrincipal || diagSecundaria || filas || columnas;
 
     }
 
