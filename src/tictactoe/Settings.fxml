@@ -8,6 +8,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" prefHeight="746.0" prefWidth="929.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.SettingsController">
@@ -37,12 +38,12 @@
             <Font size="37.0" />
          </font>
       </Label>
-      <ImageView fitHeight="103.0" fitWidth="117.0" layoutX="290.0" layoutY="252.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="103.0" fitWidth="117.0" layoutX="290.0" layoutY="270.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../resources/x.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="103.0" fitWidth="117.0" layoutX="532.0" layoutY="252.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="103.0" fitWidth="117.0" layoutX="529.0" layoutY="270.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../resources/o.png" />
          </image>
@@ -53,7 +54,9 @@
             <Image url="@../resources/play.png" />
          </image>
       </ImageView>
-      <Button fx:id="SelectX" layoutX="278.0" layoutY="252.0" mnemonicParsing="false" onAction="#clickSelectX" prefHeight="103.0" prefWidth="125.0">
+      <Rectangle fx:id="selectionO" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="117.0" layoutX="529.0" layoutY="263.0" stroke="#006b1d" strokeType="INSIDE" width="111.0" />
+      <Rectangle fx:id="selectionX" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="117.0" layoutX="286.0" layoutY="263.0" stroke="#006b1d" strokeType="INSIDE" width="111.0" />
+      <Button fx:id="SelectX" layoutX="279.0" layoutY="270.0" mnemonicParsing="false" onAction="#clickSelectX" prefHeight="103.0" prefWidth="125.0">
          <effect>
             <Shadow color="#ffffff00" />
          </effect>
@@ -61,7 +64,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="SelectO" layoutX="525.0" layoutY="252.0" mnemonicParsing="false" onAction="#clickSelectO" prefHeight="103.0" prefWidth="125.0">
+      <Button fx:id="SelectO" layoutX="522.0" layoutY="270.0" mnemonicParsing="false" onAction="#clickSelectO" prefHeight="103.0" prefWidth="125.0">
          <effect>
             <Shadow color="#ffffff00" />
          </effect>

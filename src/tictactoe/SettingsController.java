@@ -19,6 +19,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.effect.Effect;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 /**
@@ -42,6 +44,12 @@ public class SettingsController implements Initializable {
 
     @FXML
     private Button SelectO;
+    
+     @FXML
+    private Rectangle selectionX;
+
+    @FXML
+    private Rectangle selectionO;
 
     @FXML
     private Button play;
@@ -51,6 +59,8 @@ public class SettingsController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         ComboBox.setItems(opciones);
         play.setDisable(true);
+        selectionX.setOpacity(0);
+        selectionO.setOpacity(0);
         
     }    
     
@@ -67,21 +77,23 @@ public class SettingsController implements Initializable {
     void clickSelectO(ActionEvent event) {
        fichaSeleccionada = "O" ;
        existeFicha = true;
+       selectionX.setOpacity(0);
+       selectionO.setOpacity(1);
        
-       if(configComplete()){
-           play.setDisable(false);
-       }
+       
+        habilitarPlay();
     }
 
     @FXML
     void clickSelectX(ActionEvent event) {
         fichaSeleccionada = "X" ;
         existeFicha = true;
+        selectionX.setOpacity(1);
+        selectionO.setOpacity(0);
         
         
-        if(configComplete()){
-           play.setDisable(false);
-       }
+        
+        habilitarPlay();
     }
     
     @FXML
@@ -92,10 +104,15 @@ public class SettingsController implements Initializable {
             case "Computadora":
                 empiezaHumano = false;
                 existeInicio = true;
+                habilitarPlay();
+
+                System.out.println("CPU");
                 break;
             case "Humano":
                 empiezaHumano = true;
                 existeInicio = true;
+                habilitarPlay();
+                System.out.println("HUMAN");
                 break;
             default:
                 break;
@@ -104,6 +121,15 @@ public class SettingsController implements Initializable {
     
     private boolean configComplete(){
         return existeFicha && existeInicio;
+    }
+    
+    private void habilitarPlay(){
+        if(configComplete()){
+            play.setDisable(false);
+            
+        }else{
+            play.setDisable(true);
+        }
     }
     
 }
