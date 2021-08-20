@@ -35,7 +35,7 @@ public class VistaInicioController {
 
     @FXML
     void clickPlay(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("VistaJuego.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Settings.fxml"));
         Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
