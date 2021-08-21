@@ -34,6 +34,7 @@ public class Casilla extends StackPane {
                 clickEnTablero();
                 VistaJuegoController.utilidadTablero(link);
                 consultarGanador();
+                VistaJuegoController.possibleStates(turno);
             }
 
         });
