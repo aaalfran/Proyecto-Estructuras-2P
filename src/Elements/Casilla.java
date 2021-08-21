@@ -62,8 +62,9 @@ public class Casilla extends StackPane {
     }
     
     public void consultarGanador(){
-        if (VistaJuegoController.isWinner()) {
-                    JOptionPane.showMessageDialog(null, "¡Ganó el jugador X!");
+        if (VistaJuegoController.isWinner(link)) {
+                    JOptionPane.showMessageDialog(null, "¡Ganó el jugador "+link+"!");
+                    System.out.println("XD: "+link);
                 } else {
                     if (VistaJuegoController.isTie()) {
                         JOptionPane.showMessageDialog(null, "¡Empate!");

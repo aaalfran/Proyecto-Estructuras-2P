@@ -58,17 +58,15 @@ public class VistaJuegoController implements Initializable {
             for (int j = 0; j < 3; j++) {
                 arregloMatrix[i][j] = listaCasillas.get(contador).getLink();
                 contador++;
-                
-                
+
             }
         }
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                System.out.print(arregloMatrix[i][j]+" ");
+                System.out.print(arregloMatrix[i][j] + " ");
             }
             System.out.println();
         }
-        
 
         int fila = chequeoFilas(Opcion);
 
@@ -79,7 +77,7 @@ public class VistaJuegoController implements Initializable {
         int diagonalSeecundaria = chequeoDiagonalSecundaria(Opcion);
 
         return fila + columna + diagonalPrincipal + diagonalSeecundaria;
-        
+
     }
 
     public static int chequeoFilas(String Opcion) {
@@ -216,63 +214,65 @@ public class VistaJuegoController implements Initializable {
         return estado;
     }
 
-    
-    public static boolean isWinner() {
-        boolean filas = false;
-        boolean columnas = false;
-        boolean diagPrincipal = false;
-        boolean diagSecundaria = false;
+    public static boolean isWinner(String link) {
+        if (link.equals("X") || link.equals("O")) {
+            boolean filas = false;
+            boolean columnas = false;
+            boolean diagPrincipal = false;
+            boolean diagSecundaria = false;
 
-        int condFila = 1;
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j <= 3; j++) {
-                if (j < 3) {
-                    if (arregloMatrix[i][j].equals("X")) {
-                        condFila *= 1;
+            int condFila = 1;
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j <= 3; j++) {
+                    if (j < 3) {
+                        if (arregloMatrix[i][j].equals(link)) {
+                            condFila *= 1;
+                        } else {
+                            condFila *= 0;
+                        }
                     } else {
-                        condFila *= 0;
+                        if (condFila == 1) {
+                            filas = true;
+                        }
                     }
-                } else {
-                    if (condFila == 1) {
-                        filas = true;
-                    }
+
                 }
-
+                condFila = 1;
             }
-            condFila = 1;
-        }
 
-        //Chequeo por columnas
-        int eColumna = 1;
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j <= 3; j++) {
-                if (j < 3) {
-                    if (arregloMatrix[j][i].equals("X")) {
-                         eColumna *= 1;
+            //Chequeo por columnas
+            int eColumna = 1;
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j <= 3; j++) {
+                    if (j < 3) {
+                        if (arregloMatrix[j][i].equals(link)) {
+                            eColumna *= 1;
+                        } else {
+                            eColumna *= 0;
+                        }
                     } else {
-                        eColumna *= 0;
-                     }
-                } else {
-                    if (eColumna == 1) {
-                        columnas = true;
+                        if (eColumna == 1) {
+                            columnas = true;
+                        }
                     }
+
                 }
-
+                eColumna = 1;
             }
-            eColumna = 1;
-        }
 
-        //Chequeo diagonal Principal
-        if (arregloMatrix[0][0].equals("X") && arregloMatrix[1][1].equals("X") && arregloMatrix[2][2].equals("X")) {
-            diagPrincipal = true;
-        }
+            //Chequeo diagonal Principal
+            if (arregloMatrix[0][0].equals(link) && arregloMatrix[1][1].equals(link) && arregloMatrix[2][2].equals(link)) {
+                diagPrincipal = true;
+            }
 
-        //Chequeo por diagonal secundaria      
-        if (arregloMatrix[0][2].equals("X") && arregloMatrix[1][1].equals("X") && arregloMatrix[2][0].equals("X")) {
-            diagSecundaria = true;
-        }
+            //Chequeo por diagonal secundaria      
+            if (arregloMatrix[0][2].equals(link) && arregloMatrix[1][1].equals(link) && arregloMatrix[2][0].equals(link)) {
+                diagSecundaria = true;
+            }
 
-        return diagPrincipal || diagSecundaria || filas || columnas;
+            return diagPrincipal || diagSecundaria || filas || columnas;
+        }
+        return false;
 
     }
 
