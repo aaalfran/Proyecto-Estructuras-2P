@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.StackPane;
 import javax.swing.JOptionPane;
+import tictactoe.SettingsController;
 import tictactoe.VistaJuegoController;
 
 /**
@@ -19,63 +20,63 @@ import tictactoe.VistaJuegoController;
  */
 public class Casilla extends StackPane {
 
-    static int turnos = 1;
-    private ImageView estado;
+    public static String turno ="";
     private String link = "";
-
+    private ImageView ImagenEstado;
     public Casilla() {
-        estado = new ImageView();
-        estado.setFitHeight(100);
-        estado.setFitWidth(100);
+        ImagenEstado = new ImageView();
+        ImagenEstado.setFitHeight(100);
+        ImagenEstado.setFitWidth(100);
+        getChildren().addAll(ImagenEstado);
         setCursor(Cursor.HAND);
-        getChildren().addAll(estado);
-
         setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.PRIMARY) {
-
-                if (!((turnos % 2) == 0)) {
-                    link = "X";
-                    estado.setImage(new Image("/resources/x.png"));
-
-                }
-                if ((turnos % 2) == 0) {
-                    link = "O";
-                    estado.setImage(new Image("/resources/o.png"));
-                    VistaJuegoController.possibleStates("O");
-
-                }
-
-                turnos += 1;
+                clickEnTablero();
                 VistaJuegoController.utilidadTablero(link);
-                
-                System.out.println(VistaJuegoController.isWinner());
-                if (VistaJuegoController.isWinner()) {
+                consultarGanador();
+            }
+
+        });
+    }
+
+    
+    
+    public void clickEnTablero(){
+       if(SettingsController.fichaSeleccionada.equals("O")&& SettingsController.turnoHumano && turno.equals("O")){
+                   
+                    link = "O";
+                    ImagenEstado.setImage(new Image("/resources/o.png"));
+                    VistaJuegoController.possibleStates("O");
+                    turno = "X";
+                    SettingsController.turnoHumano=false;
+                    
+                    
+                }    
+                if(SettingsController.fichaSeleccionada.equals("X")&& SettingsController.turnoHumano&& turno.equals("X")){
+                    link = "X";
+                    ImagenEstado.setImage(new Image("/resources/x.png"));
+                    turno = "O";
+                    SettingsController.turnoHumano=false;
+                    
+                }
+    }
+    
+    public void consultarGanador(){
+        if (VistaJuegoController.isWinner()) {
                     JOptionPane.showMessageDialog(null, "¡Ganó el jugador X!");
                 } else {
                     if (VistaJuegoController.isTie()) {
                         JOptionPane.showMessageDialog(null, "¡Empate!");
                     }
                 }
-
-            }
-
-        });
     }
-
-    public static int getTurnos() {
-        return turnos;
-    }
-
-    public static void setTurnos(int turnos) {
-        Casilla.turnos = turnos;
-    }
-
+    
     public ImageView getEstado() {
-        return estado;
+        return ImagenEstado;
     }
 
     public void setEstado(ImageView estado) {
-        this.estado = estado;
+        this.ImagenEstado = estado;
     }
 
     public String getLink() {

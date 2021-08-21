@@ -5,6 +5,7 @@
  */
 package tictactoe;
 
+import Elements.Casilla;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -30,8 +31,8 @@ import javafx.stage.Stage;
  */
 public class SettingsController implements Initializable {
     
-    String fichaSeleccionada;
-    boolean empiezaHumano;
+    public static String fichaSeleccionada;
+    public static boolean turnoHumano;
     boolean existeFicha= false;
     boolean existeInicio=false;
     
@@ -79,6 +80,7 @@ public class SettingsController implements Initializable {
        existeFicha = true;
        selectionX.setOpacity(0);
        selectionO.setOpacity(1);
+       Casilla.turno= "O";
        
        
         habilitarPlay();
@@ -90,6 +92,7 @@ public class SettingsController implements Initializable {
         existeFicha = true;
         selectionX.setOpacity(1);
         selectionO.setOpacity(0);
+        Casilla.turno="X";
         
         
         
@@ -102,14 +105,14 @@ public class SettingsController implements Initializable {
             existeInicio = false;
         }else switch (ComboBox.getValue()) {
             case "Computadora":
-                empiezaHumano = false;
+                turnoHumano = false;
                 existeInicio = true;
                 habilitarPlay();
 
                 System.out.println("CPU");
                 break;
             case "Humano":
-                empiezaHumano = true;
+                turnoHumano = true;
                 existeInicio = true;
                 habilitarPlay();
                 System.out.println("HUMAN");

@@ -58,9 +58,17 @@ public class VistaJuegoController implements Initializable {
             for (int j = 0; j < 3; j++) {
                 arregloMatrix[i][j] = listaCasillas.get(contador).getLink();
                 contador++;
-
+                
+                
             }
         }
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                System.out.print(arregloMatrix[i][j]+" ");
+            }
+            System.out.println();
+        }
+        
 
         int fila = chequeoFilas(Opcion);
 
@@ -71,6 +79,7 @@ public class VistaJuegoController implements Initializable {
         int diagonalSeecundaria = chequeoDiagonalSecundaria(Opcion);
 
         return fila + columna + diagonalPrincipal + diagonalSeecundaria;
+        
     }
 
     public static int chequeoFilas(String Opcion) {
