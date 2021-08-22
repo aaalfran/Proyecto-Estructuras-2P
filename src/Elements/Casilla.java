@@ -21,7 +21,7 @@ import tictactoe.VistaJuegoController;
 public class Casilla extends StackPane {
 
     public static String turno ="";
-    private String link = "";
+    private String link = "-";
     private ImageView ImagenEstado;
     public Casilla() {
         ImagenEstado = new ImageView();
@@ -33,8 +33,8 @@ public class Casilla extends StackPane {
             if (event.getButton() == MouseButton.PRIMARY) {
                 clickEnTablero();
                 VistaJuegoController.utilidadTablero(link);
-                consultarGanador();
-                VistaJuegoController.possibleStates(turno);
+                //consultarGanador();
+                JuegoAI.MiniMax(VistaJuegoController.arregloMatrix, turno);
             }
 
         });

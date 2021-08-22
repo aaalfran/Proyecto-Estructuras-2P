@@ -46,9 +46,6 @@ public class VistaJuegoController implements Initializable {
                 listaCasillas.addLast(cas);
             }
         }
-
-        System.out.println(listaCasillas);
-
     }
 
     public static int utilidadTablero(String Opcion) {
@@ -61,13 +58,6 @@ public class VistaJuegoController implements Initializable {
 
             }
         }
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                System.out.print(arregloMatrix[i][j] + " ");
-            }
-            System.out.println();
-        }
-
         int fila = chequeoFilas(Opcion);
 
         int columna = chequeoColumnas(Opcion);
