@@ -48,7 +48,9 @@ public class VistaJuegoController implements Initializable {
         }
     }
 
-    public static int utilidadTablero(String Opcion) {
+    public static int utilidadTablero(String[][] matrix, String opcion) {
+        int pX = 0;
+        int pO = 0;
 
         int contador = 0;
         for (int i = 0; i < 3; i++) {
@@ -58,26 +60,42 @@ public class VistaJuegoController implements Initializable {
 
             }
         }
-        int fila = chequeoFilas(Opcion);
+        int filaX = chequeoFilas(matrix, "X");
 
-        int columna = chequeoColumnas(Opcion);
+        int columnaX = chequeoColumnas(matrix, "X");
 
-        int diagonalPrincipal = chequoDigonalPrincipal(Opcion);
+        int diagonalPrincipalX = chequoDigonalPrincipal(matrix, "X");
 
-        int diagonalSeecundaria = chequeoDiagonalSecundaria(Opcion);
+        int diagonalSeecundariaX = chequeoDiagonalSecundaria(matrix, "X");
 
-        return fila + columna + diagonalPrincipal + diagonalSeecundaria;
+        int filaO= chequeoFilas(matrix, "O");
+
+        int columnaO = chequeoColumnas(matrix, "O");
+
+        int diagonalPrincipalO = chequoDigonalPrincipal(matrix, "O");
+
+        int diagonalSeecundariaO = chequeoDiagonalSecundaria(matrix, "O");
+
+        pX= (filaX + columnaX + diagonalPrincipalX + diagonalSeecundariaX);
+        
+        pO=  (filaO+columnaO+diagonalPrincipalO+diagonalSeecundariaO);
+        
+        if(opcion.equals("X")){
+            return pO-pX;
+        }else{
+            return pX-pO;
+        }
 
     }
 
-    public static int chequeoFilas(String Opcion) {
+    public static int chequeoFilas(String[][] matrix, String Opcion) {
         //Chequeo por filas
         int cond = 1;
         int cond2 = 0;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j <= 3; j++) {
                 if (j < 3) {
-                    if (!arregloMatrix[i][j].equals(Opcion)) {
+                    if (!matrix[i][j].equals(Opcion)) {
                         cond *= 1;
                     } else {
                         cond *= 0;
@@ -94,7 +112,7 @@ public class VistaJuegoController implements Initializable {
         return cond2;
     }
 
-    public static int chequeoColumnas(String Opcion) {
+    public static int chequeoColumnas(String[][] matrix, String Opcion) {
         //Chequeo por columnas
         int condColumna = 1;
         int cond2Columna = 0;
@@ -102,7 +120,7 @@ public class VistaJuegoController implements Initializable {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j <= 3; j++) {
                 if (j < 3) {
-                    if (!arregloMatrix[j][i].equals(Opcion)) {
+                    if (!matrix[j][i].equals(Opcion)) {
                         condColumna *= 1;
                     } else {
                         condColumna *= 0;
@@ -119,9 +137,9 @@ public class VistaJuegoController implements Initializable {
         return cond2Columna;
     }
 
-    public static int chequoDigonalPrincipal(String Opcion) {
+    public static int chequoDigonalPrincipal(String[][] matrix, String Opcion) {
         //Chequeo por diagonal principal      
-        if (!arregloMatrix[0][0].equals(Opcion) && !arregloMatrix[1][1].equals(Opcion) && !arregloMatrix[2][2].equals(Opcion)) {
+        if (!matrix[0][0].equals(Opcion) && !matrix[1][1].equals(Opcion) && !matrix[2][2].equals(Opcion)) {
             return 1;
         } else {
             return 0;
@@ -129,9 +147,9 @@ public class VistaJuegoController implements Initializable {
 
     }
 
-    public static int chequeoDiagonalSecundaria(String Opcion) {
+    public static int chequeoDiagonalSecundaria(String[][] matrix, String Opcion) {
         //Chequeo por diagonal secundaria      
-        if (!arregloMatrix[0][2].equals(Opcion) && !arregloMatrix[1][1].equals(Opcion) && !arregloMatrix[2][0].equals(Opcion)) {
+        if (!matrix[0][2].equals(Opcion) && !matrix[1][1].equals(Opcion) && !matrix[2][0].equals(Opcion)) {
             return 1;
         } else {
             return 0;
@@ -276,7 +294,7 @@ public class VistaJuegoController implements Initializable {
             Tree<String[][]> children = new Tree<>(matrixTmp);;
             matricesChildren.addLast(children);
         }
-        
+
         return matricesChildren;
 
     }

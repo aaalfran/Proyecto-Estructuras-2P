@@ -30,7 +30,6 @@ public class JuegoAI {
             System.out.println();
         }
 
-        System.out.println("-------------------");
     }
 
     public static ArrayList guardarValores(String[][] m) {
@@ -173,12 +172,12 @@ public class JuegoAI {
     }
 
     public static void generarArbol(String[][] tablero, String turno) {
-
-        LinkedList<String[][]> hijos =  tableriosHijoVacio(turno);
+        LinkedList<LinkedList<Integer>>listaUtilidadles=new LinkedList<>();
+        LinkedList<String[][]> hijos = tableriosHijoVacio(turno);
         Tree<String[][]> treePrincipal = new Tree<>(arregloMatrix);
 
         LinkedList<Tree<String[][]>> totalHijos = new LinkedList<>();
-        for(String[][]tab : hijos){
+        for (String[][] tab : hijos) {
             System.out.println("hijo");
             imprimirTablero(tab);
             Tree<String[][]> hijo = new Tree<>(tab);
@@ -186,18 +185,25 @@ public class JuegoAI {
         }
 
         treePrincipal.getRoot().setChildren(totalHijos);
-        for(Tree<String[][]> h : treePrincipal.getRoot().getChildren()){
+        for (Tree<String[][]> h : treePrincipal.getRoot().getChildren()) {
             LinkedList<String[][]> nietos = tablerosPosibles(h.getRoot().getContent(), turno);
             LinkedList<Tree<String[][]>> totalNietos = new LinkedList<>();
-            for(String[][]tab : nietos){
+            LinkedList<Integer>utilidadXarbol=new LinkedList<>();
+            for (String[][] tab : nietos) {
                 System.out.println("nieto");
                 imprimirTablero(tab);
                 Tree<String[][]> nieto = new Tree<>(tab);
+                int utilidad=VistaJuegoController.utilidadTablero(tab, turno);
+                System.out.println("Utilidad del tablero: " + utilidad);
+                utilidadXarbol.addLast(utilidad);
+                System.out.println("-------------------");
                 totalNietos.addLast(nieto);
-                
             }
-            
+            listaUtilidadles.addLast(utilidadXarbol);
+
             h.getRoot().setChildren(totalNietos);
         }
+        
+        System.out.println(listaUtilidadles);
     }
 }
