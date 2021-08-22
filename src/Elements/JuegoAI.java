@@ -17,74 +17,164 @@ import static tictactoe.VistaJuegoController.arregloMatrix;
  * @author aaron
  */
 public class JuegoAI {
-   
-    public static void MiniMax(){
-        
-       
+
+    public static void MiniMax() {
+
     }
-    
-    public static void imprimirTablero(String[][] m){
+
+    public static void imprimirTablero(String[][] m) {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 System.out.print(m[i][j] + " ");
             }
             System.out.println();
         }
-        
+
         System.out.println("-------------------");
     }
-    
-    public static ArrayList guardarValores(String[][] m){
-        ArrayList res = new ArrayList<>();    
+
+    public static ArrayList guardarValores(String[][] m) {
+        ArrayList res = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 res.add(m[i][j]);
             }
         }
-        
+
         return res;
     }
-   
-    public static LinkedList<String[][]> tablerosPosibles(String[][] tablero,String jugador){
-         LinkedList<String[][]> matrices = new LinkedList<>();
+
+    public static LinkedList<String[][]> tableriosHijoVacio(String jugador) {
+        if (jugador.equals("O")) {
+            LinkedList<String[][]> matrices = new LinkedList<>();
+            ArrayList<ArrayList<String>> valores = new ArrayList<>();
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    String[][] nuevo = new String[3][3];
+                    nuevo[0][0] = "-";
+                    nuevo[0][1] = "-";
+                    nuevo[0][2] = "-";
+
+                    nuevo[1][0] = "-";
+                    nuevo[1][1] = "-";
+                    nuevo[1][2] = "-";
+
+                    nuevo[2][0] = "-";
+                    nuevo[2][1] = "-";
+                    nuevo[2][2] = "-";
+
+                    if (nuevo[i][j].equals("-")) {
+
+                        nuevo[i][j] = "X";
+                        valores.add(guardarValores(nuevo));
+                        matrices.addLast(nuevo);
+                        nuevo[i][j] = "-";
+                    }
+
+                }
+
+            }
+            LinkedList<String[][]> res = new LinkedList<>();
+            for (ArrayList<String> arreglo : valores) {
+
+                String[][] array = new String[3][3];
+                int contador = 0;
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        array[i][j] = arreglo.get(contador);
+                        contador++;
+
+                    }
+                }
+                //imprimirTablero(array);
+                res.addLast(array);
+            }
+            return res;
+        } else {
+            LinkedList<String[][]> matrices = new LinkedList<>();
+            ArrayList<ArrayList<String>> valores = new ArrayList<>();
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    String[][] nuevo = new String[3][3];
+                    nuevo[0][0] = "-";
+                    nuevo[0][1] = "-";
+                    nuevo[0][2] = "-";
+
+                    nuevo[1][0] = "-";
+                    nuevo[1][1] = "-";
+                    nuevo[1][2] = "-";
+
+                    nuevo[2][0] = "-";
+                    nuevo[2][1] = "-";
+                    nuevo[2][2] = "-";
+                    if (nuevo[i][j].equals("-")) {
+
+                        nuevo[i][j] = "O";
+                        valores.add(guardarValores(nuevo));
+                        matrices.addLast(nuevo);
+                        nuevo[i][j] = "-";
+                    }
+
+                }
+
+            }
+            LinkedList<String[][]> res = new LinkedList<>();
+            for (ArrayList<String> arreglo : valores) {
+
+                String[][] array = new String[3][3];
+                int contador = 0;
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        array[i][j] = arreglo.get(contador);
+                        contador++;
+
+                    }
+                }
+                //imprimirTablero(array);
+                res.addLast(array);
+            }
+            return res;
+        }
+
+    }
+
+    public static LinkedList<String[][]> tablerosPosibles(String[][] tablero, String jugador) {
+        LinkedList<String[][]> matrices = new LinkedList<>();
         ArrayList<ArrayList<String>> valores = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 String[][] nuevo = tablero;
-                if(nuevo[i][j].equals("-")){
-                    
-                    nuevo[i][j]=jugador;
+                if (nuevo[i][j].equals("-")) {
+
+                    nuevo[i][j] = jugador;
                     valores.add(guardarValores(nuevo));
                     matrices.addLast(nuevo);
                     nuevo[i][j] = "-";
                 }
-                
+
             }
-         
+
         }
         LinkedList<String[][]> res = new LinkedList<>();
-        for(ArrayList<String> arreglo : valores){
-           
+        for (ArrayList<String> arreglo : valores) {
+
             String[][] array = new String[3][3];
             int contador = 0;
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
                     array[i][j] = arreglo.get(contador);
                     contador++;
-                    
-
-                
-                } 
-            } 
+                }
+            }
             res.addLast(array);
         }
-        return res;     
-    }  
-    
-    
-    public static void generarArbol(String[][] tablero, String turno){
-        
-        LinkedList<String[][]> hijos = tablerosPosibles(tablero, turno);
+
+        return res;
+    }
+
+    public static void generarArbol(String[][] tablero, String turno) {
+
+        LinkedList<String[][]> hijos =  tableriosHijoVacio(turno);
         Tree<String[][]> treePrincipal = new Tree<>(arregloMatrix);
 
         LinkedList<Tree<String[][]>> totalHijos = new LinkedList<>();
@@ -94,9 +184,8 @@ public class JuegoAI {
             Tree<String[][]> hijo = new Tree<>(tab);
             totalHijos.addLast(hijo);
         }
-        
+
         treePrincipal.getRoot().setChildren(totalHijos);
-        
         for(Tree<String[][]> h : treePrincipal.getRoot().getChildren()){
             LinkedList<String[][]> nietos = tablerosPosibles(h.getRoot().getContent(), turno);
             LinkedList<Tree<String[][]>> totalNietos = new LinkedList<>();
