@@ -34,7 +34,7 @@ public class Casilla extends StackPane {
                 clickEnTablero();
                 VistaJuegoController.utilidadTablero(link);
                 //consultarGanador();
-                JuegoAI.MiniMax(VistaJuegoController.arregloMatrix, turno);
+                JuegoAI.generarArbol(VistaJuegoController.arregloMatrix, turno);
             }
 
         });

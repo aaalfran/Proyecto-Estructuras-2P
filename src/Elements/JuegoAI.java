@@ -18,9 +18,35 @@ import static tictactoe.VistaJuegoController.arregloMatrix;
  */
 public class JuegoAI {
    
-    public static void MiniMax(String[][] tablero,String jugador){
+    public static void MiniMax(){
         
-        LinkedList<String[][]> matrices = new LinkedList<>();
+       
+    }
+    
+    public static void imprimirTablero(String[][] m){
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                System.out.print(m[i][j] + " ");
+            }
+            System.out.println();
+        }
+        
+        System.out.println("-------------------");
+    }
+    
+    public static ArrayList guardarValores(String[][] m){
+        ArrayList res = new ArrayList<>();    
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                res.add(m[i][j]);
+            }
+        }
+        
+        return res;
+    }
+   
+    public static LinkedList<String[][]> tablerosPosibles(String[][] tablero,String jugador){
+         LinkedList<String[][]> matrices = new LinkedList<>();
         ArrayList<ArrayList<String>> valores = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -36,36 +62,8 @@ public class JuegoAI {
             }
          
         }
-        
-        for(String[][] mat : ArregloMatriz(valores)){
-            imprimirTablero(mat);
-            System.out.println("--------------------");
-        }   
-    }
-    
-    public static void imprimirTablero(String[][] m){
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                System.out.print(m[i][j] + " ");
-            }
-            System.out.println();
-        }
-    }
-    
-    public static ArrayList guardarValores(String[][] m){
-        ArrayList res = new ArrayList<>();    
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                res.add(m[i][j]);
-            }
-        }
-        
-        return res;
-    }
-    
-    public static ArrayList<String[][]> ArregloMatriz(ArrayList<ArrayList<String>> al){
-        ArrayList<String[][]> res = new ArrayList();
-        for(ArrayList<String> arreglo : al){
+        LinkedList<String[][]> res = new LinkedList<>();
+        for(ArrayList<String> arreglo : valores){
            
             String[][] array = new String[3][3];
             int contador = 0;
@@ -78,11 +76,39 @@ public class JuegoAI {
                 
                 } 
             } 
-            res.add(array);
+            res.addLast(array);
         }
-        return res;
+        return res;     
+    }  
+    
+    
+    public static void generarArbol(String[][] tablero, String turno){
+        
+        LinkedList<String[][]> hijos = tablerosPosibles(tablero, turno);
+        Tree<String[][]> treePrincipal = new Tree<>(arregloMatrix);
+
+        LinkedList<Tree<String[][]>> totalHijos = new LinkedList<>();
+        for(String[][]tab : hijos){
+            System.out.println("hijo");
+            imprimirTablero(tab);
+            Tree<String[][]> hijo = new Tree<>(tab);
+            totalHijos.addLast(hijo);
+        }
+        
+        treePrincipal.getRoot().setChildren(totalHijos);
+        
+        for(Tree<String[][]> h : treePrincipal.getRoot().getChildren()){
+            LinkedList<String[][]> nietos = tablerosPosibles(h.getRoot().getContent(), turno);
+            LinkedList<Tree<String[][]>> totalNietos = new LinkedList<>();
+            for(String[][]tab : nietos){
+                System.out.println("nieto");
+                imprimirTablero(tab);
+                Tree<String[][]> nieto = new Tree<>(tab);
+                totalNietos.addLast(nieto);
+                
+            }
+            
+            h.getRoot().setChildren(totalNietos);
+        }
     }
-    
-    
-    
 }
