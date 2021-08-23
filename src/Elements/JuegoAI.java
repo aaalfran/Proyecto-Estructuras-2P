@@ -172,38 +172,33 @@ public class JuegoAI {
     }
 
     public static void generarArbol(String[][] tablero, String turno) {
-        LinkedList<LinkedList<Integer>>listaUtilidadles=new LinkedList<>();
-        LinkedList<String[][]> hijos = tableriosHijoVacio(turno);
+        
+        LinkedList<String[][]> hijos = tablerosPosibles(tablero, turno);
         Tree<String[][]> treePrincipal = new Tree<>(arregloMatrix);
 
         LinkedList<Tree<String[][]>> totalHijos = new LinkedList<>();
-        for (String[][] tab : hijos) {
+        for(String[][]tab : hijos){
             System.out.println("hijo");
             imprimirTablero(tab);
             Tree<String[][]> hijo = new Tree<>(tab);
             totalHijos.addLast(hijo);
         }
-
+        
         treePrincipal.getRoot().setChildren(totalHijos);
-        for (Tree<String[][]> h : treePrincipal.getRoot().getChildren()) {
+        
+        for(Tree<String[][]> h : treePrincipal.getRoot().getChildren()){
             LinkedList<String[][]> nietos = tablerosPosibles(h.getRoot().getContent(), turno);
             LinkedList<Tree<String[][]>> totalNietos = new LinkedList<>();
-            LinkedList<Integer>utilidadXarbol=new LinkedList<>();
-            for (String[][] tab : nietos) {
+            for(String[][]tab : nietos){
                 System.out.println("nieto");
                 imprimirTablero(tab);
                 Tree<String[][]> nieto = new Tree<>(tab);
-                int utilidad=VistaJuegoController.utilidadTablero(tab, turno);
-                System.out.println("Utilidad del tablero: " + utilidad);
-                utilidadXarbol.addLast(utilidad);
-                System.out.println("-------------------");
                 totalNietos.addLast(nieto);
+                
             }
-            listaUtilidadles.addLast(utilidadXarbol);
-
+            
             h.getRoot().setChildren(totalNietos);
         }
-        
-        System.out.println(listaUtilidadles);
     }
+    
 }

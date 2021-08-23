@@ -33,6 +33,7 @@ public class Casilla extends StackPane {
             if (event.getButton() == MouseButton.PRIMARY) {
                 clickEnTablero();
                 //consultarGanador();
+                VistaJuegoController.actualizarTablero();
                 JuegoAI.generarArbol(VistaJuegoController.arregloMatrix, turno);
             }
 

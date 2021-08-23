@@ -47,11 +47,8 @@ public class VistaJuegoController implements Initializable {
             }
         }
     }
-
-    public static int utilidadTablero(String[][] matrix, String opcion) {
-        int pX = 0;
-        int pO = 0;
-
+    
+    public static void actualizarTablero(){
         int contador = 0;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -60,6 +57,14 @@ public class VistaJuegoController implements Initializable {
 
             }
         }
+    }
+
+    public static int utilidadTablero(String[][] matrix, String opcion) {
+        int pX = 0;
+        int pO = 0;
+
+        
+        
         int filaX = chequeoFilas(matrix, "X");
 
         int columnaX = chequeoColumnas(matrix, "X");
@@ -85,6 +90,7 @@ public class VistaJuegoController implements Initializable {
         }else{
             return pX-pO;
         }
+
 
     }
 
