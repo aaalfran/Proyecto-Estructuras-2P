@@ -34,7 +34,12 @@ public class Casilla extends StackPane {
                 clickEnTablero();
                 //consultarGanador();
                 VistaJuegoController.actualizarTablero();
-                JuegoAI.generarArbol(VistaJuegoController.arregloMatrix, turno);
+                JuegoAI.generarArbolUtilidades(VistaJuegoController.arregloMatrix, turno);
+                JuegoAI.tomarDecision(VistaJuegoController.arregloMatrix, turno);
+                System.out.println(JuegoAI.coordenadasPosibles(VistaJuegoController.arregloMatrix, turno));
+                JuegoAI.CasillaporSeleccionar(VistaJuegoController.arregloMatrix, turno);
+                clickEnTableroAI();
+                
             }
 
         });
@@ -60,6 +65,13 @@ public class Casilla extends StackPane {
                     SettingsController.turnoHumano=false;
                     
                 }
+    }
+    
+    public void clickEnTableroAI(){
+        Casilla click = JuegoAI.CasillaporSeleccionar(VistaJuegoController.arregloMatrix, turno);
+        
+        click.ImagenEstado.setImage(new Image("/resources/o.png"));
+        SettingsController.turnoHumano= true;
     }
     
     public void consultarGanador(){

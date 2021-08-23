@@ -9,6 +9,7 @@ import TDAs.LinkedList;
 import TDAs.Tree;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import tictactoe.VistaJuegoController;
 import static tictactoe.VistaJuegoController.arregloMatrix;
 
@@ -167,12 +168,33 @@ public class JuegoAI {
             }
             res.addLast(array);
         }
-
+        
         return res;
     }
+    
+    public static ArrayList<ArrayList<Integer>> coordenadasPosibles(String[][] tablero, String jugador){
+        
+        ArrayList<ArrayList<Integer>> coordenadas = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                String[][] nuevo = tablero;
+                ArrayList<Integer> coordenada = new ArrayList<>();
+                if (nuevo[i][j].equals("-")) {
+                    coordenada.add(i);
+                    coordenada.add(j);
+                    coordenadas.add(coordenada);
+                    nuevo[i][j] = jugador;
+                    nuevo[i][j] = "-";
+                }
 
-    public static void generarArbol(String[][] tablero, String turno) {
-        LinkedList<LinkedList<Integer>>listaUtilidadles=new LinkedList<>();
+            }
+
+        }
+        return coordenadas;
+    }
+
+    public static ArrayList<ArrayList<Integer>> generarArbolUtilidades(String[][] tablero, String turno) {
+        ArrayList<ArrayList<Integer>>listaUtilidadles=new ArrayList<>();
         LinkedList<String[][]> hijos = tablerosPosibles(tablero, turno);
         Tree<String[][]> treePrincipal = new Tree<>(arregloMatrix);
 
@@ -189,22 +211,61 @@ public class JuegoAI {
         for(Tree<String[][]> h : treePrincipal.getRoot().getChildren()){
             LinkedList<String[][]> nietos = tablerosPosibles(h.getRoot().getContent(), turno);
             LinkedList<Tree<String[][]>> totalNietos = new LinkedList<>();
-            LinkedList<Integer>utilidadXarbol=new LinkedList<>();
+            ArrayList<Integer>utilidadXarbol=new ArrayList<>();
             for(String[][]tab : nietos){
                 System.out.println("nieto");
                 imprimirTablero(tab);
                 Tree<String[][]> nieto = new Tree<>(tab);
                 int utilidad=VistaJuegoController.utilidadTablero(tab, turno);
                 System.out.println("Utilidad del tablero: " + utilidad);
-                utilidadXarbol.addLast(utilidad);
+                utilidadXarbol.add(utilidad);
                 System.out.println("-------------------");
                 totalNietos.addLast(nieto);
                 
             }
-            listaUtilidadles.addLast(utilidadXarbol);
+            listaUtilidadles.add(utilidadXarbol);
             h.getRoot().setChildren(totalNietos);
         }
+        
         System.out.println(listaUtilidadles);
+        return listaUtilidadles;
     }
+    
+    
+    public static int tomarDecision(String[][] tablero, String turno){
+        ArrayList<ArrayList<Integer>> listaUtilidades = generarArbolUtilidades(tablero, turno);
+        ArrayList<Integer> utilidadesDecisiones = new ArrayList<>();
+        for(ArrayList<Integer> utilidad : listaUtilidades ){
+            int menor = Collections.min(utilidad);
+            utilidadesDecisiones.add(menor);
+        }
+        
+        int decisionFinal = Collections.max(utilidadesDecisiones);
+        System.out.println(decisionFinal);
+        
+        LinkedList<String[][]> opciones = tablerosPosibles(tablero, turno);
+        
+        String[][] seleccion = opciones.get(decisionFinal-1);
+        
+        imprimirTablero(seleccion);
+       
+        
+        return decisionFinal-1;
+    }
+    
+    public static Casilla CasillaporSeleccionar(String[][] tablero, String turno){
+        ArrayList<ArrayList<Integer>> coordenadas = coordenadasPosibles(tablero, turno);
+        
+        int coordenadaSeleccionada = tomarDecision(tablero, turno);
+        ArrayList<Integer> coordenada = coordenadas.get(coordenadaSeleccionada);
+        
+        System.out.println(coordenada);
+        
+        Casilla cuadroAdibujar = VistaJuegoController.mesadeJuego[coordenada.get(0)][coordenada.get(1)];
+        
+        return cuadroAdibujar;
+            
+    }        
+        
     
 }

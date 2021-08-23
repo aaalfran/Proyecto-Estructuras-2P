@@ -28,6 +28,7 @@ public class VistaJuegoController implements Initializable {
 //Creando objetos en pantalla
     public static String[][] arregloMatrix = new String[3][3];
     static LinkedList<Casilla> listaCasillas = new LinkedList();
+    public static Casilla[][] mesadeJuego = new Casilla[3][3];
 
     static Tree<String[][]> tree = new Tree<>(arregloMatrix);
 
@@ -38,6 +39,7 @@ public class VistaJuegoController implements Initializable {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 Casilla cas = new Casilla();
+                mesadeJuego[i][j]= cas;
                 cas.setTranslateX(j * 160);
                 cas.setTranslateY(i * 160);
                 cas.setLayoutX(j + 260);
