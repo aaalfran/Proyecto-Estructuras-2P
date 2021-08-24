@@ -32,6 +32,7 @@ import javafx.stage.Stage;
 public class SettingsController implements Initializable {
     
     public static String fichaSeleccionada;
+    public static String fichaComputadora;
     public static boolean turnoHumano;
     boolean existeFicha= false;
     boolean existeInicio=false;
@@ -60,6 +61,7 @@ public class SettingsController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         ComboBox.setItems(opciones);
         play.setDisable(true);
+        ComboBox.setDisable(true);
         selectionX.setOpacity(0);
         selectionO.setOpacity(0);
         
@@ -76,11 +78,12 @@ public class SettingsController implements Initializable {
 
     @FXML
     void clickSelectO(ActionEvent event) {
+        ComboBox.setDisable(false);
        fichaSeleccionada = "O" ;
+       fichaComputadora = "X";
        existeFicha = true;
        selectionX.setOpacity(0);
        selectionO.setOpacity(1);
-       Casilla.turno= "O";
        
        
         habilitarPlay();
@@ -88,11 +91,12 @@ public class SettingsController implements Initializable {
 
     @FXML
     void clickSelectX(ActionEvent event) {
+        ComboBox.setDisable(false);
         fichaSeleccionada = "X" ;
+        fichaComputadora = "O";
         existeFicha = true;
         selectionX.setOpacity(1);
         selectionO.setOpacity(0);
-        Casilla.turno="X";
         
         
         
@@ -107,6 +111,7 @@ public class SettingsController implements Initializable {
             case "Computadora":
                 turnoHumano = false;
                 existeInicio = true;
+                Casilla.turno = fichaComputadora;
                 habilitarPlay();
 
                 System.out.println("CPU");
@@ -114,6 +119,7 @@ public class SettingsController implements Initializable {
             case "Humano":
                 turnoHumano = true;
                 existeInicio = true;
+                Casilla.turno = fichaSeleccionada;
                 habilitarPlay();
                 System.out.println("HUMAN");
                 break;

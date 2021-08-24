@@ -31,14 +31,16 @@ public class Casilla extends StackPane {
         setCursor(Cursor.HAND);
         setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.PRIMARY) {
+                this.setDisable(true);
                 clickEnTablero();
-                //consultarGanador();
+                VistaJuegoController.actualizarListaCasillas(link, this);
                 VistaJuegoController.actualizarTablero();
                 JuegoAI.generarArbolUtilidades(VistaJuegoController.arregloMatrix, turno);
                 JuegoAI.tomarDecision(VistaJuegoController.arregloMatrix, turno);
                 System.out.println(JuegoAI.coordenadasPosibles(VistaJuegoController.arregloMatrix, turno));
-                JuegoAI.CasillaporSeleccionar(VistaJuegoController.arregloMatrix, turno);
                 clickEnTableroAI();
+                
+                System.out.println(VistaJuegoController.isWinner(link));
                 
             }
 
@@ -67,11 +69,33 @@ public class Casilla extends StackPane {
                 }
     }
     
-    public void clickEnTableroAI(){
-        Casilla click = JuegoAI.CasillaporSeleccionar(VistaJuegoController.arregloMatrix, turno);
+    public static void clickEnTableroAI(){
+        if(!SettingsController.turnoHumano){
+            Casilla click = JuegoAI.CasillaporSeleccionar(VistaJuegoController.arregloMatrix, turno);
+            if(SettingsController.fichaSeleccionada.equals("X")){
+                click.ImagenEstado.setImage(new Image("/resources/o.png"));
+            }else{
+                click.ImagenEstado.setImage(new Image("/resources/x.png"));
+            }
+            click.setDisable(true);
+            SettingsController.turnoHumano= true;
+            VistaJuegoController.actualizarListaCasillas(SettingsController.fichaComputadora,JuegoAI.CasillaporSeleccionar(VistaJuegoController.arregloMatrix, turno));
+            VistaJuegoController.actualizarTablero();
+            System.out.println("TABLERO DESPUES DE LA IA");
+            JuegoAI.imprimirTablero(VistaJuegoController.arregloMatrix);
+            System.out.println(VistaJuegoController.isWinner(turno));
+           
+            if(turno.equals("X")){
+                turno = "O";
+            }else{
+                turno = "X";
+            }
+            
+        }
         
-        click.ImagenEstado.setImage(new Image("/resources/o.png"));
-        SettingsController.turnoHumano= true;
+        
+        
+        
     }
     
     public void consultarGanador(){

@@ -10,6 +10,7 @@ import TDAs.Tree;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import tictactoe.SettingsController;
 import tictactoe.VistaJuegoController;
 import static tictactoe.VistaJuegoController.arregloMatrix;
 
@@ -197,11 +198,13 @@ public class JuegoAI {
         ArrayList<ArrayList<Integer>>listaUtilidadles=new ArrayList<>();
         LinkedList<String[][]> hijos = tablerosPosibles(tablero, turno);
         Tree<String[][]> treePrincipal = new Tree<>(arregloMatrix);
-
         LinkedList<Tree<String[][]>> totalHijos = new LinkedList<>();
+        
+        int contador1 = -1;
         for(String[][]tab : hijos){
-            System.out.println("hijo");
-            imprimirTablero(tab);
+            contador1++;
+//            System.out.println("hijo"+ contador1);
+//            imprimirTablero(tab);
             Tree<String[][]> hijo = new Tree<>(tab);
             totalHijos.addLast(hijo);
         }
@@ -209,17 +212,34 @@ public class JuegoAI {
         treePrincipal.getRoot().setChildren(totalHijos);
         
         for(Tree<String[][]> h : treePrincipal.getRoot().getChildren()){
-            LinkedList<String[][]> nietos = tablerosPosibles(h.getRoot().getContent(), turno);
+            LinkedList<String[][]> nietos;
+            if(turno.equals("O")){
+                nietos = tablerosPosibles(h.getRoot().getContent(),"X");
+            }else{
+                nietos = tablerosPosibles(h.getRoot().getContent(),"O");
+            }
             LinkedList<Tree<String[][]>> totalNietos = new LinkedList<>();
             ArrayList<Integer>utilidadXarbol=new ArrayList<>();
+            
+            int contador = -1;
             for(String[][]tab : nietos){
-                System.out.println("nieto");
-                imprimirTablero(tab);
+                contador++;
+//                System.out.println("nieto"+ contador);
+//                imprimirTablero(tab);
+                int utilidad;
+                if(VistaJuegoController.checkWinnerBoard(tab,SettingsController.fichaComputadora)){
+                    utilidad = 100000;
+                    utilidadXarbol.add(utilidad);
+                }else if(VistaJuegoController.checkWinnerBoard(tab,SettingsController.fichaSeleccionada)){
+                    utilidad = -100000;
+                    utilidadXarbol.add(utilidad);
+                }else{
+                    utilidad = VistaJuegoController.utilidadTablero(tab,turno);
+                    utilidadXarbol.add(utilidad);
+                }
                 Tree<String[][]> nieto = new Tree<>(tab);
-                int utilidad=VistaJuegoController.utilidadTablero(tab, turno);
-                System.out.println("Utilidad del tablero: " + utilidad);
-                utilidadXarbol.add(utilidad);
-                System.out.println("-------------------");
+                //System.out.println("Utilidad del tablero: " + utilidad);
+                //System.out.println("-------------------");
                 totalNietos.addLast(nieto);
                 
             }
@@ -240,17 +260,18 @@ public class JuegoAI {
             utilidadesDecisiones.add(menor);
         }
         
-        int decisionFinal = Collections.max(utilidadesDecisiones);
+        int decisionFinal = utilidadesDecisiones.indexOf(Collections.max(utilidadesDecisiones));
+        System.out.println(utilidadesDecisiones);
         System.out.println(decisionFinal);
         
         LinkedList<String[][]> opciones = tablerosPosibles(tablero, turno);
         
-        String[][] seleccion = opciones.get(decisionFinal-1);
+        String[][] seleccion = opciones.get(decisionFinal);
         
         imprimirTablero(seleccion);
        
         
-        return decisionFinal-1;
+        return decisionFinal;
     }
     
     public static Casilla CasillaporSeleccionar(String[][] tablero, String turno){

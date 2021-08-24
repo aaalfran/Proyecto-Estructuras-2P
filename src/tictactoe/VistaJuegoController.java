@@ -6,9 +6,11 @@
 package tictactoe;
 
 import Elements.Casilla;
+import Elements.JuegoAI;
 import TDAs.LinkedList;
 import TDAs.Tree;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -50,15 +52,41 @@ public class VistaJuegoController implements Initializable {
         }
     }
     
+    public static void actualizarListaCasillas(String ficha, Casilla casClick){
+        int indice = obtenerCoordenadaCasilla(casClick);
+        
+        casClick.setLink(ficha);
+        //System.out.println(casClick.getLink());
+        listaCasillas.set(indice, casClick);
+        
+    }
+    
+    public static int obtenerCoordenadaCasilla(Casilla casClick){
+        int contador = -1;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                contador++;
+                if(mesadeJuego[i][j].equals(casClick)){
+                    System.out.println(contador);
+                    return contador;
+                }
+            }
+        }
+        
+        return -1;  
+    }
+    
     public static void actualizarTablero(){
         int contador = 0;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 arregloMatrix[i][j] = listaCasillas.get(contador).getLink();
+                
                 contador++;
-
             }
         }
+        //System.out.println(listaCasillas);
+        
     }
 
     public static int utilidadTablero(String[][] matrix, String opcion) {
@@ -218,6 +246,64 @@ public class VistaJuegoController implements Initializable {
 
         return estado;
     }
+    
+    public static boolean checkWinnerBoard(String[][] tablero, String link){
+        boolean filas = false;
+            boolean columnas = false;
+            boolean diagPrincipal = false;
+            boolean diagSecundaria = false;
+
+            int condFila = 1;
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j <= 3; j++) {
+                    if (j < 3) {
+                        if (tablero[i][j].equals(link)) {
+                            condFila *= 1;
+                        } else {
+                            condFila *= 0;
+                        }
+                    } else {
+                        if (condFila == 1) {
+                            filas = true;
+                        }
+                    }
+
+                }
+                condFila = 1;
+            }
+
+            //Chequeo por columnas
+            int eColumna = 1;
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j <= 3; j++) {
+                    if (j < 3) {
+                        if (tablero[j][i].equals(link)) {
+                            eColumna *= 1;
+                        } else {
+                            eColumna *= 0;
+                        }
+                    } else {
+                        if (eColumna == 1) {
+                            columnas = true;
+                        }
+                    }
+
+                }
+                eColumna = 1;
+            }
+
+            //Chequeo diagonal Principal
+            if (tablero[0][0].equals(link) && tablero[1][1].equals(link) && tablero[2][2].equals(link)) {
+                diagPrincipal = true;
+            }
+
+            //Chequeo por diagonal secundaria      
+            if (tablero[0][2].equals(link) && tablero[1][1].equals(link) && tablero[2][0].equals(link)) {
+                diagSecundaria = true;
+            }
+
+            return diagPrincipal || diagSecundaria || filas || columnas;
+    }
 
     public static boolean isWinner(String link) {
         if (link.equals("X") || link.equals("O")) {
@@ -310,5 +396,12 @@ public class VistaJuegoController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         crearMatriz();
+        
+        if(!SettingsController.turnoHumano){
+            JuegoAI.imprimirTablero(arregloMatrix);
+            actualizarTablero();
+            JuegoAI.imprimirTablero(arregloMatrix);
+            Casilla.clickEnTableroAI();
+        }
     }
 }
