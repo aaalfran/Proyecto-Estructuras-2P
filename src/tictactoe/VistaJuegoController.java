@@ -9,12 +9,26 @@ import Elements.Casilla;
 import Elements.JuegoAI;
 import TDAs.LinkedList;
 import TDAs.Tree;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 import static tictactoe.VistaJuegoController.arregloMatrix;
 
 /**
@@ -26,6 +40,9 @@ public class VistaJuegoController implements Initializable {
 
     @FXML
     private Pane root;
+    
+    @FXML
+    private ImageView botonExit;
 
 //Creando objetos en pantalla
     public static String[][] arregloMatrix = new String[3][3];
@@ -403,5 +420,36 @@ public class VistaJuegoController implements Initializable {
             JuegoAI.imprimirTablero(arregloMatrix);
             Casilla.clickEnTableroAI();
         }
+    }
+    
+     @FXML
+    void clicExit(MouseEvent event) throws IOException {
+        
+            arregloMatrix = new String[3][3];
+            listaCasillas = new LinkedList();
+            mesadeJuego = new Casilla[3][3];
+            Parent root = FXMLLoader.load(getClass().getResource("VistaInicio.fxml"));
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+    }
+    
+    public static boolean terminarJuego(String link){
+        boolean continuar = true;
+        if(checkWinnerBoard(arregloMatrix, link)){
+            
+            JOptionPane.showMessageDialog(null, "¡Ganó el jugador "+link+"!");
+            continuar = false;
+            
+            for(Casilla[] cas : mesadeJuego){
+                for(Casilla c: cas){
+                    c.setDisable(true);
+                }
+            }
+            //System.exit(1);
+        }
+        
+        return continuar;
     }
 }

@@ -31,6 +31,8 @@ public class Casilla extends StackPane {
         setCursor(Cursor.HAND);
         setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.PRIMARY) {
+                
+                try {
                 this.setDisable(true);
                 clickEnTablero();
                 VistaJuegoController.actualizarListaCasillas(link, this);
@@ -38,9 +40,13 @@ public class Casilla extends StackPane {
                 JuegoAI.generarArbolUtilidades(VistaJuegoController.arregloMatrix, turno);
                 JuegoAI.tomarDecision(VistaJuegoController.arregloMatrix, turno);
                 System.out.println(JuegoAI.coordenadasPosibles(VistaJuegoController.arregloMatrix, turno));
-                clickEnTableroAI();
+                if(VistaJuegoController.terminarJuego(link)){
+                    clickEnTableroAI();
+                }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Empate");
+                }
                 
-                System.out.println(VistaJuegoController.isWinner(link));
                 
             }
 
@@ -73,8 +79,10 @@ public class Casilla extends StackPane {
         if(!SettingsController.turnoHumano){
             Casilla click = JuegoAI.CasillaporSeleccionar(VistaJuegoController.arregloMatrix, turno);
             if(SettingsController.fichaSeleccionada.equals("X")){
+                System.out.println("Se actualiza O");
                 click.ImagenEstado.setImage(new Image("/resources/o.png"));
             }else{
+                System.out.println("Se actualiza X");
                 click.ImagenEstado.setImage(new Image("/resources/x.png"));
             }
             click.setDisable(true);
@@ -84,6 +92,8 @@ public class Casilla extends StackPane {
             System.out.println("TABLERO DESPUES DE LA IA");
             JuegoAI.imprimirTablero(VistaJuegoController.arregloMatrix);
             System.out.println(VistaJuegoController.isWinner(turno));
+            
+            VistaJuegoController.terminarJuego(turno);
            
             if(turno.equals("X")){
                 turno = "O";
@@ -96,17 +106,6 @@ public class Casilla extends StackPane {
         
         
         
-    }
-    
-    public void consultarGanador(){
-        if (VistaJuegoController.isWinner(link)) {
-                    JOptionPane.showMessageDialog(null, "¡Ganó el jugador "+link+"!");
-                    System.out.println("XD: "+link);
-                } else {
-                    if (VistaJuegoController.isTie()) {
-                        JOptionPane.showMessageDialog(null, "¡Empate!");
-                    }
-                }
     }
     
     public ImageView getEstado() {
