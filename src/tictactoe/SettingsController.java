@@ -31,24 +31,26 @@ import javafx.stage.Stage;
  * @author aaron
  */
 public class SettingsController implements Initializable {
-    
+
     public static String fichaSeleccionada;
     public static String fichaComputadora;
+    public static boolean inicioComp;
     public static boolean turnoHumano;
-    boolean existeFicha= false;
-    boolean existeInicio=false;
-    
+    boolean existeFicha = false;
+    boolean existeInicio = false;
+    public static boolean comodinActivado = false;
+
     @FXML
     private ComboBox<String> ComboBox;
-    private final ObservableList opciones = FXCollections.observableArrayList("Computadora","Humano");
-    
-        @FXML
+    private final ObservableList opciones = FXCollections.observableArrayList("Computadora", "Humano");
+
+    @FXML
     private Button SelectX;
 
     @FXML
     private Button SelectO;
-    
-     @FXML
+
+    @FXML
     private Rectangle selectionX;
 
     @FXML
@@ -56,11 +58,10 @@ public class SettingsController implements Initializable {
 
     @FXML
     private Button play;
-    
+
     @FXML
     private CheckBox checkBoxSugerencia;
-  
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         ComboBox.setItems(opciones);
@@ -68,9 +69,9 @@ public class SettingsController implements Initializable {
         ComboBox.setDisable(true);
         selectionX.setOpacity(0);
         selectionO.setOpacity(0);
-        
-    }    
-    
+
+    }
+
     @FXML
     void clickPlay(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("VistaJuego.fxml"));
@@ -83,72 +84,75 @@ public class SettingsController implements Initializable {
     @FXML
     void clickSelectO(ActionEvent event) {
         ComboBox.setDisable(false);
-       fichaSeleccionada = "O" ;
-       fichaComputadora = "X";
-       existeFicha = true;
-       selectionX.setOpacity(0);
-       selectionO.setOpacity(1);
-       
-       
+        fichaSeleccionada = "O";
+        fichaComputadora = "X";
+        existeFicha = true;
+        selectionX.setOpacity(0);
+        selectionO.setOpacity(1);
+
         habilitarPlay();
     }
 
     @FXML
     void clickSelectX(ActionEvent event) {
         ComboBox.setDisable(false);
-        fichaSeleccionada = "X" ;
+        fichaSeleccionada = "X";
         fichaComputadora = "O";
         existeFicha = true;
         selectionX.setOpacity(1);
         selectionO.setOpacity(0);
-        
-        
-        
+
         habilitarPlay();
     }
-    
+
     @FXML
     void comboClick(ActionEvent event) {
-        if(null == ComboBox.getValue()){
+        if (null == ComboBox.getValue()) {
             existeInicio = false;
-        }else switch (ComboBox.getValue()) {
-            case "Computadora":
-                turnoHumano = false;
-                existeInicio = true;
-                Casilla.turno = fichaComputadora;
-                habilitarPlay();
+        } else {
+            switch (ComboBox.getValue()) {
+                case "Computadora":
+                    inicioComp =true;
+                    turnoHumano = false;
+                    existeInicio = true;
+                    Casilla.turno = fichaComputadora;
+                    habilitarPlay();
 
-                System.out.println("CPU");
-                break;
-            case "Humano":
-                turnoHumano = true;
-                existeInicio = true;
-                Casilla.turno = fichaSeleccionada;
-                habilitarPlay();
-                System.out.println("HUMAN");
-                break;
-            default:
-                break;
+                    System.out.println("CPU");
+                    break;
+                case "Humano":
+                    turnoHumano = true;
+                    existeInicio = true;
+                    Casilla.turno = fichaSeleccionada;
+                    habilitarPlay();
+                    System.out.println("HUMAN");
+                    break;
+                default:
+                    break;
+            }
         }
     }
-    
+
     @FXML
     void habilitarSugerencias(ActionEvent event) {
-        System.out.println("Sugerencias activadas");
-        //TODO 
+        if (checkBoxSugerencia.isSelected()) {
+            comodinActivado = true;
+        } else {
+            comodinActivado = false;
+        }
     }
-    
-    private boolean configComplete(){
+
+    private boolean configComplete() {
         return existeFicha && existeInicio;
     }
-    
-    private void habilitarPlay(){
-        if(configComplete()){
+
+    private void habilitarPlay() {
+        if (configComplete()) {
             play.setDisable(false);
-            
-        }else{
+
+        } else {
             play.setDisable(true);
         }
     }
-    
+
 }

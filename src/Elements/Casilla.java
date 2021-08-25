@@ -20,9 +20,10 @@ import tictactoe.VistaJuegoController;
  */
 public class Casilla extends StackPane {
 
-    public static String turno ="";
+    public static String turno = "";
     private String link = "-";
     private ImageView ImagenEstado;
+
     public Casilla() {
         ImagenEstado = new ImageView();
         ImagenEstado.setFitHeight(100);
@@ -31,83 +32,83 @@ public class Casilla extends StackPane {
         setCursor(Cursor.HAND);
         setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.PRIMARY) {
-                
+
                 try {
-                this.setDisable(true);
-                clickEnTablero();
-                VistaJuegoController.actualizarListaCasillas(link, this);
-                VistaJuegoController.actualizarTablero();
-                JuegoAI.generarArbolUtilidades(VistaJuegoController.arregloMatrix, turno);
-                JuegoAI.tomarDecision(VistaJuegoController.arregloMatrix, turno);
-                System.out.println(JuegoAI.coordenadasPosibles(VistaJuegoController.arregloMatrix, turno));
-                if(VistaJuegoController.terminarJuego(link)){
-                    clickEnTableroAI();
-                }
+                    this.setDisable(true);
+                    clickEnTablero();
+                    VistaJuegoController.actualizarListaCasillas(link, this);
+                    VistaJuegoController.actualizarTablero();
+                    JuegoAI.generarArbolUtilidades(VistaJuegoController.arregloMatrix, turno);
+                    JuegoAI.tomarDecision(VistaJuegoController.arregloMatrix, turno);
+                    System.out.println(JuegoAI.coordenadasPosibles(VistaJuegoController.arregloMatrix, turno));
+
+                    if (VistaJuegoController.terminarJuego(link)) {
+                        clickEnTableroAI();
+                        if (SettingsController.inicioComp) {
+                            JuegoAI.comodin(VistaJuegoController.arregloMatrix, SettingsController.fichaComputadora);
+                        } else {
+                            JuegoAI.comodin(VistaJuegoController.arregloMatrix, SettingsController.fichaSeleccionada);
+                        }
+                    }
                 } catch (Exception e) {
+                    System.out.println(e.getCause()
+                    );
                     JOptionPane.showMessageDialog(null, "Empate");
                 }
-                
-                
+
             }
 
         });
     }
 
-    
-    
-    public void clickEnTablero(){
-       if(SettingsController.fichaSeleccionada.equals("O")&& SettingsController.turnoHumano && turno.equals("O")){
-                   
-                    link = "O";
-                    ImagenEstado.setImage(new Image("/resources/o.png"));
-                    VistaJuegoController.possibleStates("O");
-                    turno = "X";
-                    SettingsController.turnoHumano=false;
-                    
-                    
-                }    
-                if(SettingsController.fichaSeleccionada.equals("X")&& SettingsController.turnoHumano&& turno.equals("X")){
-                    link = "X";
-                    ImagenEstado.setImage(new Image("/resources/x.png"));
-                    turno = "O";
-                    SettingsController.turnoHumano=false;
-                    
-                }
+    public void clickEnTablero() {
+        if (SettingsController.fichaSeleccionada.equals("O") && SettingsController.turnoHumano && turno.equals("O")) {
+
+            link = "O";
+            ImagenEstado.setImage(new Image("/resources/o.png"));
+            turno = "X";
+            SettingsController.turnoHumano = false;
+
+        }
+        if (SettingsController.fichaSeleccionada.equals("X") && SettingsController.turnoHumano && turno.equals("X")) {
+            link = "X";
+            ImagenEstado.setImage(new Image("/resources/x.png"));
+            turno = "O";
+            SettingsController.turnoHumano = false;
+
+        }
     }
-    
-    public static void clickEnTableroAI(){
-        if(!SettingsController.turnoHumano){
+
+    public static void clickEnTableroAI() {
+        if (!SettingsController.turnoHumano) {
             Casilla click = JuegoAI.CasillaporSeleccionar(VistaJuegoController.arregloMatrix, turno);
-            if(SettingsController.fichaSeleccionada.equals("X")){
+            if (SettingsController.fichaSeleccionada.equals("X")) {
                 System.out.println("Se actualiza O");
                 click.ImagenEstado.setImage(new Image("/resources/o.png"));
-            }else{
+            } else {
                 System.out.println("Se actualiza X");
                 click.ImagenEstado.setImage(new Image("/resources/x.png"));
             }
             click.setDisable(true);
-            SettingsController.turnoHumano= true;
-            VistaJuegoController.actualizarListaCasillas(SettingsController.fichaComputadora,JuegoAI.CasillaporSeleccionar(VistaJuegoController.arregloMatrix, turno));
+            SettingsController.turnoHumano = true;
+            VistaJuegoController.actualizarListaCasillas(SettingsController.fichaComputadora, JuegoAI.CasillaporSeleccionar(VistaJuegoController.arregloMatrix, turno));
             VistaJuegoController.actualizarTablero();
             System.out.println("TABLERO DESPUES DE LA IA");
             JuegoAI.imprimirTablero(VistaJuegoController.arregloMatrix);
             System.out.println(VistaJuegoController.isWinner(turno));
-            
+
             VistaJuegoController.terminarJuego(turno);
-           
-            if(turno.equals("X")){
+
+            if (turno.equals("X")) {
                 turno = "O";
-            }else{
+            } else {
                 turno = "X";
             }
-            
+
         }
-        
-        
-        
-        
+
     }
-    
+
     public ImageView getEstado() {
         return ImagenEstado;
     }

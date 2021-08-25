@@ -10,6 +10,8 @@ import TDAs.Tree;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import javafx.scene.control.Alert;
+import javafx.stage.Modality;
 import tictactoe.SettingsController;
 import tictactoe.VistaJuegoController;
 import static tictactoe.VistaJuegoController.arregloMatrix;
@@ -169,12 +171,12 @@ public class JuegoAI {
             }
             res.addLast(array);
         }
-        
+
         return res;
     }
-    
-    public static ArrayList<ArrayList<Integer>> coordenadasPosibles(String[][] tablero, String jugador){
-        
+
+    public static ArrayList<ArrayList<Integer>> coordenadasPosibles(String[][] tablero, String jugador) {
+
         ArrayList<ArrayList<Integer>> coordenadas = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -195,98 +197,112 @@ public class JuegoAI {
     }
 
     public static ArrayList<ArrayList<Integer>> generarArbolUtilidades(String[][] tablero, String turno) {
-        ArrayList<ArrayList<Integer>>listaUtilidadles=new ArrayList<>();
+        ArrayList<ArrayList<Integer>> listaUtilidadles = new ArrayList<>();
         LinkedList<String[][]> hijos = tablerosPosibles(tablero, turno);
         Tree<String[][]> treePrincipal = new Tree<>(arregloMatrix);
         LinkedList<Tree<String[][]>> totalHijos = new LinkedList<>();
-        
+
         int contador1 = -1;
-        for(String[][]tab : hijos){
+        for (String[][] tab : hijos) {
             contador1++;
 //            System.out.println("hijo"+ contador1);
 //            imprimirTablero(tab);
             Tree<String[][]> hijo = new Tree<>(tab);
             totalHijos.addLast(hijo);
         }
-        
+
         treePrincipal.getRoot().setChildren(totalHijos);
-        
-        for(Tree<String[][]> h : treePrincipal.getRoot().getChildren()){
+
+        for (Tree<String[][]> h : treePrincipal.getRoot().getChildren()) {
             LinkedList<String[][]> nietos;
-            if(turno.equals("O")){
-                nietos = tablerosPosibles(h.getRoot().getContent(),"X");
-            }else{
-                nietos = tablerosPosibles(h.getRoot().getContent(),"O");
+            if (turno.equals("O")) {
+                nietos = tablerosPosibles(h.getRoot().getContent(), "X");
+            } else {
+                nietos = tablerosPosibles(h.getRoot().getContent(), "O");
             }
             LinkedList<Tree<String[][]>> totalNietos = new LinkedList<>();
-            ArrayList<Integer>utilidadXarbol=new ArrayList<>();
-            
+            ArrayList<Integer> utilidadXarbol = new ArrayList<>();
+
             int contador = -1;
-            for(String[][]tab : nietos){
+            for (String[][] tab : nietos) {
                 contador++;
 //                System.out.println("nieto"+ contador);
 //                imprimirTablero(tab);
                 int utilidad;
-                if(VistaJuegoController.checkWinnerBoard(tab,SettingsController.fichaComputadora)){
+                if (VistaJuegoController.checkWinnerBoard(tab, SettingsController.fichaComputadora)) {
                     utilidad = 100000;
                     utilidadXarbol.add(utilidad);
-                }else if(VistaJuegoController.checkWinnerBoard(tab,SettingsController.fichaSeleccionada)){
+                } else if (VistaJuegoController.checkWinnerBoard(tab, SettingsController.fichaSeleccionada)) {
                     utilidad = -100000;
                     utilidadXarbol.add(utilidad);
-                }else{
-                    utilidad = VistaJuegoController.utilidadTablero(tab,turno);
+                } else {
+                    utilidad = VistaJuegoController.utilidadTablero(tab, turno);
                     utilidadXarbol.add(utilidad);
                 }
                 Tree<String[][]> nieto = new Tree<>(tab);
                 //System.out.println("Utilidad del tablero: " + utilidad);
                 //System.out.println("-------------------");
                 totalNietos.addLast(nieto);
-                
+
             }
             listaUtilidadles.add(utilidadXarbol);
             h.getRoot().setChildren(totalNietos);
         }
-        
-        System.out.println(listaUtilidadles);
+
+        // System.out.println(listaUtilidadles);
         return listaUtilidadles;
     }
-    
-    
-    public static int tomarDecision(String[][] tablero, String turno){
+
+    public static int tomarDecision(String[][] tablero, String turno) {
+//        System.out.println("decision final");
         ArrayList<ArrayList<Integer>> listaUtilidades = generarArbolUtilidades(tablero, turno);
         ArrayList<Integer> utilidadesDecisiones = new ArrayList<>();
-        for(ArrayList<Integer> utilidad : listaUtilidades ){
+        for (ArrayList<Integer> utilidad : listaUtilidades) {
             int menor = Collections.min(utilidad);
             utilidadesDecisiones.add(menor);
         }
-        
+
         int decisionFinal = utilidadesDecisiones.indexOf(Collections.max(utilidadesDecisiones));
-        System.out.println(utilidadesDecisiones);
-        System.out.println(decisionFinal);
-        
+//        System.out.println(decisionFinal);
+
         LinkedList<String[][]> opciones = tablerosPosibles(tablero, turno);
-        
+
         String[][] seleccion = opciones.get(decisionFinal);
-        
-        imprimirTablero(seleccion);
-       
-        
+
+//        imprimirTablero(seleccion);
         return decisionFinal;
     }
-    
-    public static Casilla CasillaporSeleccionar(String[][] tablero, String turno){
+
+    public static Casilla CasillaporSeleccionar(String[][] tablero, String turno) {
         ArrayList<ArrayList<Integer>> coordenadas = coordenadasPosibles(tablero, turno);
-        
+
         int coordenadaSeleccionada = tomarDecision(tablero, turno);
         ArrayList<Integer> coordenada = coordenadas.get(coordenadaSeleccionada);
-        
-        System.out.println(coordenada);
-        
+
         Casilla cuadroAdibujar = VistaJuegoController.mesadeJuego[coordenada.get(0)][coordenada.get(1)];
-        
+
         return cuadroAdibujar;
-            
-    }        
-        
-    
+
+    }
+
+    public static void comodin(String[][] matrix, String turno) {
+        try {
+            System.out.println("XD");
+
+            if (SettingsController.comodinActivado && VistaJuegoController.terminarJuego(turno)) {
+                ArrayList<ArrayList<Integer>> c = coordenadasPosibles(matrix, turno);
+                int coordenadaSeleccionada = tomarDecision(matrix, turno);
+                ArrayList<Integer> coordenada = c.get(coordenadaSeleccionada);
+                Alert.AlertType mensajeInfo = Alert.AlertType.INFORMATION;
+                Alert alerta = new Alert(mensajeInfo, "");
+                alerta.initModality(Modality.APPLICATION_MODAL);
+                System.out.println("Movimiento en la casilla :" + coordenada);
+                alerta.getDialogPane().setHeaderText("Movimiento en la casilla :" + coordenada);
+                alerta.showAndWait();
+
+            }
+        } catch (Exception E) {
+        }
+    }
+
 }

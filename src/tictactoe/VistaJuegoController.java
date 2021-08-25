@@ -209,47 +209,7 @@ public class VistaJuegoController implements Initializable {
         }
     }
 
-    public static void possibleStates(String opcion) {
-        //crea los hijos del arbol(posibles movimientos)
-        try {
-
-            LinkedList<Tree<String[][]>> matricesChildren = createChildren();
-
-            //estados si la computadora Inicia
-            int acum = 0;
-            int acum2 = 0;
-            int acum3 = 0;
-            for (int i = 0; i < matricesChildren.size(); i++) {
-                if (i < 3) {
-                    String element = matricesChildren.get(i).getRoot().getContent()[0][acum] = opcion;
-                    acum++;
-
-                }
-                if (i >= 3 && i < 6) {
-                    String element = matricesChildren.get(i).getRoot().getContent()[1][acum2] = opcion;
-                    acum2++;
-                }
-                if (i >= 6 && i < 9) {
-                    String element = matricesChildren.get(i).getRoot().getContent()[2][acum3] = opcion;
-                    acum3++;
-                }
-
-            }
-            //carga el arbol con sus hijos
-            tree.getRoot().setChildren(matricesChildren);
-            System.out.println(tree.getRoot().getChildren().size());
-
-            LinkedList<Tree<String[][]>> matricesNietos = createChildren();
-            for (Tree<String[][]> hijo : tree.getRoot().getChildren()) {
-                hijo.getRoot().setChildren(matricesNietos);
-            }
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-    }
-
+   
     public static boolean isTie() {
         boolean estado = true;
         for (int i = 0; i < 3; i++) {
@@ -381,32 +341,6 @@ public class VistaJuegoController implements Initializable {
             return diagPrincipal || diagSecundaria || filas || columnas;
         }
         return false;
-
-    }
-
-    public static int freeSpace() {
-        int acum = 0;
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
-                if (arregloMatrix[i][j].equals("")) {
-                    acum++;
-                }
-            }
-
-        }
-        return acum;
-
-    }
-
-    public static LinkedList<Tree<String[][]>> createChildren() {
-        LinkedList<Tree<String[][]>> matricesChildren = new LinkedList();
-        for (int i = 0; i < freeSpace(); i++) {
-            String[][] matrixTmp = new String[3][3];
-            Tree<String[][]> children = new Tree<>(matrixTmp);;
-            matricesChildren.addLast(children);
-        }
-
-        return matricesChildren;
 
     }
 
