@@ -19,6 +19,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.effect.Effect;
 import javafx.scene.shape.Rectangle;
@@ -55,6 +56,9 @@ public class SettingsController implements Initializable {
 
     @FXML
     private Button play;
+    
+    @FXML
+    private CheckBox checkBoxSugerencia;
   
     
     @Override
@@ -126,6 +130,12 @@ public class SettingsController implements Initializable {
             default:
                 break;
         }
+    }
+    
+    @FXML
+    void habilitarSugerencias(ActionEvent event) {
+        System.out.println("Sugerencias activadas");
+        //TODO 
     }
     
     private boolean configComplete(){
