@@ -10,6 +10,7 @@ package Ventana;
  * @author fabri
  */
 public class MenuEleccion extends javax.swing.JFrame {
+    public static String link="";
 
     /**
      * Creates new form MenuEleccion
@@ -19,7 +20,7 @@ public class MenuEleccion extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         
-        //rsscalelabel.RSScaleLabel.setScaleLabel(btnFoto1, "src/Recursos/naveEspacial.png");
+       
     }
 
     /**
@@ -43,6 +44,11 @@ public class MenuEleccion extends javax.swing.JFrame {
 
         btnFoto3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/extraerrestreBoton.png"))); // NOI18N
         btnFoto3.setText(" ");
+        btnFoto3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFoto3ActionPerformed(evt);
+            }
+        });
 
         btnFoto1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/naveEspacialBoton.png"))); // NOI18N
         btnFoto1.setText(" ");
@@ -54,6 +60,11 @@ public class MenuEleccion extends javax.swing.JFrame {
 
         btnFoto2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/carroBoton.png"))); // NOI18N
         btnFoto2.setText(" ");
+        btnFoto2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFoto2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -91,7 +102,27 @@ public class MenuEleccion extends javax.swing.JFrame {
 
     private void btnFoto1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFoto1ActionPerformed
         // TODO add your handling code here:
+        link="src/Recursos/naveEspacialBoton.png";
+        Laberinto lb=new Laberinto();
+        lb.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnFoto1ActionPerformed
+
+    private void btnFoto2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFoto2ActionPerformed
+        // TODO add your handling code here:
+        link="src/Recursos/carroBoton.png";
+        Laberinto lb=new Laberinto();
+        lb.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnFoto2ActionPerformed
+
+    private void btnFoto3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFoto3ActionPerformed
+        // TODO add your handling code here:
+        link="src/Recursos/extraerrestreBoton.png";
+        Laberinto lb=new Laberinto();
+        lb.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnFoto3ActionPerformed
 
     /**
      * @param args the command line arguments

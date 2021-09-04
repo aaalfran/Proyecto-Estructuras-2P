@@ -5,11 +5,17 @@
  */
 package Ventana;
 
+import java.awt.Color;
+import java.awt.Label;
+import javax.swing.JLabel;
+
 /**
  *
  * @author fabri
  */
 public class Laberinto extends javax.swing.JFrame {
+
+    int contador = 1;
 
     /**
      * Creates new form Laberinto
@@ -18,6 +24,8 @@ public class Laberinto extends javax.swing.JFrame {
         initComponents();
         this.setResizable(false);
         this.setLocationRelativeTo(null);
+        rsscalelabel.RSScaleLabel.setScaleLabel(pos1, MenuEleccion.link);
+        btnMenu.setEnabled(false);
     }
 
     /**
@@ -53,16 +61,17 @@ public class Laberinto extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        jButtonDown = new javax.swing.JButton();
+        btnUp = new javax.swing.JButton();
+        btnRight = new javax.swing.JButton();
+        btnLeft = new javax.swing.JButton();
         focoLeft = new javax.swing.JPanel();
         focoUP = new javax.swing.JPanel();
         focoRicht = new javax.swing.JPanel();
         focoDown = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        btnMenu = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -164,7 +173,7 @@ public class Laberinto extends javax.swing.JFrame {
         );
 
         jPanel1.add(jPanel2);
-        jPanel2.setBounds(30, 490, 80, 80);
+        jPanel2.setBounds(40, 490, 80, 80);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
         jLabel1.setText("Fin");
@@ -175,23 +184,43 @@ public class Laberinto extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Estado");
         jPanel1.add(jLabel2);
-        jLabel2.setBounds(30, 450, 80, 30);
+        jLabel2.setBounds(40, 450, 80, 30);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/flechaAbajoRedimension.png"))); // NOI18N
-        jPanel1.add(jButton1);
-        jButton1.setBounds(590, 520, 40, 40);
+        jButtonDown.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/flechaAbajoRedimension.png"))); // NOI18N
+        jButtonDown.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDownActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButtonDown);
+        jButtonDown.setBounds(590, 520, 40, 40);
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/arribaRedimesion.png"))); // NOI18N
-        jPanel1.add(jButton2);
-        jButton2.setBounds(590, 440, 40, 40);
+        btnUp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/arribaRedimesion.png"))); // NOI18N
+        btnUp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnUp);
+        btnUp.setBounds(590, 440, 40, 40);
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/flechaDerechaRedimension.png"))); // NOI18N
-        jPanel1.add(jButton3);
-        jButton3.setBounds(630, 480, 40, 40);
+        btnRight.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/flechaDerechaRedimension.png"))); // NOI18N
+        btnRight.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRightActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnRight);
+        btnRight.setBounds(630, 480, 40, 40);
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/flechaIzquierdaRedimension.png"))); // NOI18N
-        jPanel1.add(jButton4);
-        jButton4.setBounds(550, 480, 40, 40);
+        btnLeft.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/flechaIzquierdaRedimension.png"))); // NOI18N
+        btnLeft.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLeftActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnLeft);
+        btnLeft.setBounds(550, 480, 40, 40);
 
         javax.swing.GroupLayout focoLeftLayout = new javax.swing.GroupLayout(focoLeft);
         focoLeft.setLayout(focoLeftLayout);
@@ -260,6 +289,16 @@ public class Laberinto extends javax.swing.JFrame {
         jPanel1.add(jLabel4);
         jLabel4.setBounds(30, 210, 80, 30);
 
+        btnMenu.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
+        btnMenu.setText("Menú");
+        btnMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMenuActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnMenu);
+        btnMenu.setBounds(240, 490, 200, 80);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -273,6 +312,80 @@ public class Laberinto extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    public void ubicarFoto(JLabel posicionInicial, JLabel posicionFinal) {
+        rsscalelabel.RSScaleLabel.setScaleLabel(posicionFinal, MenuEleccion.link);
+        posicionInicial.setVisible(false);
+        contador++;
+    }
+
+    private void btnUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpActionPerformed
+        // TODO add your handling code here:
+        if (contador == 3) {
+            ubicarFoto(pos3, pos4);
+        } else if (contador == 5) {
+            ubicarFoto(pos5, pos6);
+        } else if (contador == 10) {
+            ubicarFoto(pos10, pos11);
+        } else if (contador == 14) {
+            ubicarFoto(pos14, pos15);
+        } else if (contador == 16) {
+            ubicarFoto(pos16, pos17);
+        }
+
+    }//GEN-LAST:event_btnUpActionPerformed
+
+    private void btnLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLeftActionPerformed
+        // TODO add your handling code here
+        if (contador == 4) {
+            ubicarFoto(pos4, pos5);
+        } else if (contador == 15) {
+            ubicarFoto(pos15, pos16);
+        }
+    }//GEN-LAST:event_btnLeftActionPerformed
+
+    private void btnRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRightActionPerformed
+        // TODO add your handling code here:
+        if (contador == 2) {
+            ubicarFoto(pos2, pos3);
+        } else if (contador == 6) {
+            ubicarFoto(pos6, pos7);
+        } else if (contador == 9) {
+            ubicarFoto(pos9, pos10);
+        } else if (contador == 11) {
+            ubicarFoto(pos11, pos12);
+        } else if (contador == 13) {
+            ubicarFoto(pos13, pos14);
+        } else if (contador == 17) {
+            ubicarFoto(pos17, pos18);
+        } else if (contador == 18) {
+            ubicarFoto(pos18, pos19);
+            jPanel2.setBackground(Color.GREEN);
+            btnMenu.setEnabled(true);
+        }
+
+    }//GEN-LAST:event_btnRightActionPerformed
+
+    private void jButtonDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDownActionPerformed
+        // TODO add your handling code here:
+        if (contador == 1) {
+            ubicarFoto(pos1, pos2);
+        } else if (contador == 7) {
+            ubicarFoto(pos7, pos8);
+        } else if (contador == 8) {
+            ubicarFoto(pos8, pos9);
+        } else if (contador == 12) {
+            ubicarFoto(pos12, pos13);
+        }
+
+    }//GEN-LAST:event_jButtonDownActionPerformed
+
+    private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
+        // TODO add your handling code here:
+        Menu mn=new Menu();
+        mn.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnMenuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -310,14 +423,15 @@ public class Laberinto extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnLeft;
+    private javax.swing.JButton btnMenu;
+    private javax.swing.JButton btnRight;
+    private javax.swing.JButton btnUp;
     private javax.swing.JPanel focoDown;
     private javax.swing.JPanel focoLeft;
     private javax.swing.JPanel focoRicht;
     private javax.swing.JPanel focoUP;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButtonDown;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
