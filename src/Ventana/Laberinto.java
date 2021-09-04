@@ -8,6 +8,7 @@ package Ventana;
 import java.awt.Color;
 import java.awt.Label;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -26,6 +27,10 @@ public class Laberinto extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         rsscalelabel.RSScaleLabel.setScaleLabel(pos1, MenuEleccion.link);
         btnMenu.setEnabled(false);
+        focoUP.setBackground(Color.BLACK);
+        focoDown.setBackground(Color.BLACK);
+        focoRight.setBackground(Color.BLACK);
+        focoLeft.setBackground(Color.BLACK);
     }
 
     /**
@@ -65,9 +70,9 @@ public class Laberinto extends javax.swing.JFrame {
         btnUp = new javax.swing.JButton();
         btnRight = new javax.swing.JButton();
         btnLeft = new javax.swing.JButton();
-        focoLeft = new javax.swing.JPanel();
+        focoRight = new javax.swing.JPanel();
         focoUP = new javax.swing.JPanel();
-        focoRicht = new javax.swing.JPanel();
+        focoLeft = new javax.swing.JPanel();
         focoDown = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -222,19 +227,19 @@ public class Laberinto extends javax.swing.JFrame {
         jPanel1.add(btnLeft);
         btnLeft.setBounds(550, 480, 40, 40);
 
-        javax.swing.GroupLayout focoLeftLayout = new javax.swing.GroupLayout(focoLeft);
-        focoLeft.setLayout(focoLeftLayout);
-        focoLeftLayout.setHorizontalGroup(
-            focoLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout focoRightLayout = new javax.swing.GroupLayout(focoRight);
+        focoRight.setLayout(focoRightLayout);
+        focoRightLayout.setHorizontalGroup(
+            focoRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 20, Short.MAX_VALUE)
         );
-        focoLeftLayout.setVerticalGroup(
-            focoLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        focoRightLayout.setVerticalGroup(
+            focoRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 20, Short.MAX_VALUE)
         );
 
-        jPanel1.add(focoLeft);
-        focoLeft.setBounds(680, 490, 20, 20);
+        jPanel1.add(focoRight);
+        focoRight.setBounds(680, 490, 20, 20);
 
         javax.swing.GroupLayout focoUPLayout = new javax.swing.GroupLayout(focoUP);
         focoUP.setLayout(focoUPLayout);
@@ -250,19 +255,19 @@ public class Laberinto extends javax.swing.JFrame {
         jPanel1.add(focoUP);
         focoUP.setBounds(600, 410, 20, 20);
 
-        javax.swing.GroupLayout focoRichtLayout = new javax.swing.GroupLayout(focoRicht);
-        focoRicht.setLayout(focoRichtLayout);
-        focoRichtLayout.setHorizontalGroup(
-            focoRichtLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout focoLeftLayout = new javax.swing.GroupLayout(focoLeft);
+        focoLeft.setLayout(focoLeftLayout);
+        focoLeftLayout.setHorizontalGroup(
+            focoLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 20, Short.MAX_VALUE)
         );
-        focoRichtLayout.setVerticalGroup(
-            focoRichtLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        focoLeftLayout.setVerticalGroup(
+            focoLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 20, Short.MAX_VALUE)
         );
 
-        jPanel1.add(focoRicht);
-        focoRicht.setBounds(520, 490, 20, 20);
+        jPanel1.add(focoLeft);
+        focoLeft.setBounds(520, 490, 20, 20);
 
         javax.swing.GroupLayout focoDownLayout = new javax.swing.GroupLayout(focoDown);
         focoDown.setLayout(focoDownLayout);
@@ -332,6 +337,10 @@ public class Laberinto extends javax.swing.JFrame {
         } else if (contador == 16) {
             ubicarFoto(pos16, pos17);
         }
+        focoDown.setBackground(Color.BLACK);
+        focoUP.setBackground(Color.BLUE);
+        focoRight.setBackground(Color.BLACK);
+        focoLeft.setBackground(Color.BLACK);
 
     }//GEN-LAST:event_btnUpActionPerformed
 
@@ -342,6 +351,10 @@ public class Laberinto extends javax.swing.JFrame {
         } else if (contador == 15) {
             ubicarFoto(pos15, pos16);
         }
+        focoDown.setBackground(Color.BLACK);
+        focoUP.setBackground(Color.BLACK);
+        focoRight.setBackground(Color.BLACK);
+        focoLeft.setBackground(Color.BLUE);
     }//GEN-LAST:event_btnLeftActionPerformed
 
     private void btnRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRightActionPerformed
@@ -362,7 +375,12 @@ public class Laberinto extends javax.swing.JFrame {
             ubicarFoto(pos18, pos19);
             jPanel2.setBackground(Color.GREEN);
             btnMenu.setEnabled(true);
+            JOptionPane.showMessageDialog(null, "¡Juego Terminado!");
         }
+        focoDown.setBackground(Color.BLACK);
+        focoUP.setBackground(Color.BLACK);
+        focoRight.setBackground(Color.BLUE);
+        focoLeft.setBackground(Color.BLACK);
 
     }//GEN-LAST:event_btnRightActionPerformed
 
@@ -377,12 +395,16 @@ public class Laberinto extends javax.swing.JFrame {
         } else if (contador == 12) {
             ubicarFoto(pos12, pos13);
         }
+        focoDown.setBackground(Color.BLUE);
+        focoUP.setBackground(Color.BLACK);
+        focoRight.setBackground(Color.BLACK);
+        focoLeft.setBackground(Color.BLACK);
 
     }//GEN-LAST:event_jButtonDownActionPerformed
 
     private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
         // TODO add your handling code here:
-        Menu mn=new Menu();
+        Menu mn = new Menu();
         mn.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnMenuActionPerformed
@@ -429,7 +451,7 @@ public class Laberinto extends javax.swing.JFrame {
     private javax.swing.JButton btnUp;
     private javax.swing.JPanel focoDown;
     private javax.swing.JPanel focoLeft;
-    private javax.swing.JPanel focoRicht;
+    private javax.swing.JPanel focoRight;
     private javax.swing.JPanel focoUP;
     private javax.swing.JButton jButtonDown;
     private javax.swing.JLabel jLabel1;
