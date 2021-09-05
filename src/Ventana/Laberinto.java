@@ -25,7 +25,9 @@ public class Laberinto extends javax.swing.JFrame {
         initComponents();
         this.setResizable(false);
         this.setLocationRelativeTo(null);
+        this.setTitle("¡Juguemos!");
         rsscalelabel.RSScaleLabel.setScaleLabel(pos1, MenuEleccion.link);
+        rsscalelabel.RSScaleLabel.setScaleLabel(JLogoAJA, "src/Recursos/logoAJA.jpg");
         btnMenu.setEnabled(false);
         focoUP.setBackground(Color.BLACK);
         focoDown.setBackground(Color.BLACK);
@@ -77,6 +79,7 @@ public class Laberinto extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         btnMenu = new javax.swing.JButton();
+        JLogoAJA = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -170,7 +173,7 @@ public class Laberinto extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 80, Short.MAX_VALUE)
+            .addGap(0, 90, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -178,7 +181,7 @@ public class Laberinto extends javax.swing.JFrame {
         );
 
         jPanel1.add(jPanel2);
-        jPanel2.setBounds(40, 490, 80, 80);
+        jPanel2.setBounds(30, 490, 90, 80);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
         jLabel1.setText("Fin");
@@ -189,7 +192,7 @@ public class Laberinto extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Estado");
         jPanel1.add(jLabel2);
-        jLabel2.setBounds(40, 450, 80, 30);
+        jLabel2.setBounds(30, 450, 90, 30);
 
         jButtonDown.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/flechaAbajoRedimension.png"))); // NOI18N
         jButtonDown.addActionListener(new java.awt.event.ActionListener() {
@@ -303,6 +306,10 @@ public class Laberinto extends javax.swing.JFrame {
         });
         jPanel1.add(btnMenu);
         btnMenu.setBounds(240, 490, 200, 80);
+
+        JLogoAJA.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.add(JLogoAJA);
+        JLogoAJA.setBounds(560, 10, 140, 130);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -445,6 +452,7 @@ public class Laberinto extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel JLogoAJA;
     private javax.swing.JButton btnLeft;
     private javax.swing.JButton btnMenu;
     private javax.swing.JButton btnRight;

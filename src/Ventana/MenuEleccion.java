@@ -19,6 +19,7 @@ public class MenuEleccion extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+        this.setTitle("Ventana Selección");
         
        
     }
@@ -33,30 +34,17 @@ public class MenuEleccion extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        btnFoto2 = new javax.swing.JButton();
         btnFoto3 = new javax.swing.JButton();
         btnFoto1 = new javax.swing.JButton();
-        btnFoto2 = new javax.swing.JButton();
+        jWallPaper = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         jLabel1.setText("Seleccione un Avatar antes jugar");
-
-        btnFoto3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/extraerrestreBoton.png"))); // NOI18N
-        btnFoto3.setText(" ");
-        btnFoto3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFoto3ActionPerformed(evt);
-            }
-        });
-
-        btnFoto1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/naveEspacialBoton.png"))); // NOI18N
-        btnFoto1.setText(" ");
-        btnFoto1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFoto1ActionPerformed(evt);
-            }
-        });
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 80, -1, -1));
 
         btnFoto2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/carroBoton.png"))); // NOI18N
         btnFoto2.setText(" ");
@@ -65,37 +53,29 @@ public class MenuEleccion extends javax.swing.JFrame {
                 btnFoto2ActionPerformed(evt);
             }
         });
+        getContentPane().add(btnFoto2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 150, 200, 200));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(btnFoto1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
-                        .addComponent(btnFoto2, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 18, Short.MAX_VALUE)
-                .addComponent(btnFoto3, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(jLabel1)
-                .addGap(70, 70, 70)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnFoto3, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnFoto1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnFoto2, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(121, Short.MAX_VALUE))
-        );
+        btnFoto3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/extraerrestreBoton.png"))); // NOI18N
+        btnFoto3.setText(" ");
+        btnFoto3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFoto3ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnFoto3, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 150, 200, 200));
+
+        btnFoto1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/naveEspacialBoton.png"))); // NOI18N
+        btnFoto1.setText(" ");
+        btnFoto1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFoto1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnFoto1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 200, 200));
+
+        jWallPaper.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/portadaSeleccion.jpg"))); // NOI18N
+        jWallPaper.setText(" ");
+        getContentPane().add(jWallPaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 785, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -164,5 +144,6 @@ public class MenuEleccion extends javax.swing.JFrame {
     private javax.swing.JButton btnFoto2;
     private javax.swing.JButton btnFoto3;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jWallPaper;
     // End of variables declaration//GEN-END:variables
 }
