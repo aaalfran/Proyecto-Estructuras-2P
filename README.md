@@ -1,4 +1,4 @@
-# Proyecto-Estructuras-2P
+# TicTacToe
 Proyecto correspondiente al segundo parcial de la materia de estructuras de datos 
 ![image](https://user-images.githubusercontent.com/73259474/130832782-6e8f9045-b13f-4dd2-baef-b11a4c0158a7.png)
 
